@@ -299,16 +299,16 @@
 
     /* ---- 1. Hero (#3D6A99) ---- */
     .band-hero {
-      position: relative; overflow: hidden; isolation: isolate;
+      position: relative; overflow: hidden;
       background: var(--band-hero); color: #fff;
       min-height: clamp(480px, 70vh, 640px);
       display: flex; align-items: center;
       padding-top: 64px; padding-bottom: 64px;
     }
-    .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 30% 40%; z-index: -2; max-width: none; }
-    /* #3D6A99 tint over the photo (stronger on phones, where text covers the whole image) */
-    .band-hero::before { background: linear-gradient(270deg, rgba(61,106,153,.95) 0%, rgba(61,106,153,.86) 38%, rgba(61,106,153,.35) 72%, rgba(61,106,153,.15) 100%); }
-    .hero-copy { margin-left: auto; }    .hero-inner { width: 100%; }
+    /* Three stacked layers: photo (1) → #3D6A99 tint (2) → text (3) */
+    .band-hero .hero-bg { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: 30% 40%; }
+    .band-hero::before { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: rgba(61, 106, 153, .84); } /* phones: even tint */
+    .band-hero .hero-inner { position: relative; z-index: 3; width: 100%; }
     .hero-copy { max-width: 620px; }
     .hero-copy .eyebrow { color: var(--mint); }
     .band-hero h1 { color: #fff; font-size: clamp(2.1rem, 6vw, 3.5rem); letter-spacing: -.025em; margin-bottom: 16px; }
@@ -710,7 +710,8 @@
 
       .band { padding: 80px 24px; }
       .band-hero { padding-top: 88px; padding-bottom: 88px; }
-      .band-hero::before { background: linear-gradient(90deg, rgba(61,106,153,.95) 0%, rgba(61,106,153,.86) 38%, rgba(61,106,153,.35) 72%, rgba(61,106,153,.15) 100%); }
+      .band-hero::before { background: linear-gradient(270deg, rgba(61,106,153,.95) 0%, rgba(61,106,153,.86) 38%, rgba(61,106,153,.35) 72%, rgba(61,106,153,.15) 100%); }
+      .hero-copy { margin-left: auto; }
       .marquee { --mq-h: 76px; --mq-speed: 34s; }
       .band-marquee { padding: 28px 0; }
       .videos-grid { grid-template-columns: 1fr 1fr; }
