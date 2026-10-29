@@ -305,10 +305,10 @@
       display: flex; align-items: center;
       padding-top: 64px; padding-bottom: 64px;
     }
-    .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 60% 40%; z-index: -2; max-width: none; }
+    .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 30% 40%; z-index: -2; max-width: none; }
     /* #3D6A99 tint over the photo (stronger on phones, where text covers the whole image) */
-    .band-hero::before { content: ""; position: absolute; inset: 0; z-index: -1; background: rgba(61, 106, 153, .84); }
-    .hero-inner { width: 100%; }
+    .band-hero::before { background: linear-gradient(270deg, rgba(61,106,153,.95) 0%, rgba(61,106,153,.86) 38%, rgba(61,106,153,.35) 72%, rgba(61,106,153,.15) 100%); }
+    .hero-copy { margin-left: auto; }    .hero-inner { width: 100%; }
     .hero-copy { max-width: 620px; }
     .hero-copy .eyebrow { color: var(--mint); }
     .band-hero h1 { color: #fff; font-size: clamp(2.1rem, 6vw, 3.5rem); letter-spacing: -.025em; margin-bottom: 16px; }
@@ -493,16 +493,24 @@
       .ig-grid { grid-auto-flow: column; grid-auto-columns: 84%; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 12px; margin-right: -16px; padding-right: 16px; }
       .ig-grid > * { scroll-snap-align: start; }
     }
-    /* Before Instagram's script runs (or if it's blocked), each post shows as a tidy link tile */
-    .ig-grid blockquote.instagram-media {
-      margin: 0; padding: 20px; aspect-ratio: 4 / 5;
-      display: grid; place-items: center;
-      background: #fff; border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow);
+    /* Every post sits in an identical frame: Instagram's profile bar + a 4:5 media area.
+    Taller embeds are trimmed at the bottom; shorter ones get white space below. */
+    .ig-item {
+      container-type: inline-size;
+      background: #fff; border: 1px solid var(--line); border-radius: 16px;
+      box-shadow: var(--shadow); overflow: hidden;
     }
+    .ig-clip {
+      --ig-header: 62px;                          /* Instagram's profile bar; adjust if the crop looks off */
+      height: calc(var(--ig-header) + 125cqw);    /* 125cqw = a 4:5 image at the card's width */
+      overflow: hidden;
+    }
+    /* Before Instagram's script runs (or if it's blocked), each post shows as a tidy link tile */
+    .ig-grid blockquote.instagram-media { margin: 0; padding: 20px; height: 100%; display: grid; place-items: center; background: #fff; border: 0; }
     .ig-grid blockquote.instagram-media a { display: grid; justify-items: center; gap: 10px; font-weight: 800; text-decoration: none; text-align: center; }
     .ig-grid blockquote.instagram-media svg { width: 36px; height: 36px; }
-    /* Once rendered, let the embeds shrink to fit the grid columns */
-    .ig-grid iframe.instagram-media { min-width: 0 !important; width: 100% !important; max-width: none !important; margin: 0 !important; border-radius: 16px !important; box-shadow: var(--shadow) !important; }
+    /* Once rendered, the embed fills the frame width; the frame handles corners and shadow */
+    .ig-grid iframe.instagram-media { min-width: 0 !important; width: 100% !important; max-width: none !important; margin: 0 !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
 
     /* =========================================================
        FORMS
@@ -1019,18 +1027,26 @@
                section scrolls near view) turns each blockquote into the live post.
                To change a post, swap the permalink in both data-instgrm-permalink and the link. -->
           <div class="ig-grid">
-            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DTiVWJXDvvy/" data-instgrm-version="14">
-              <a href="https://www.instagram.com/p/DTiVWJXDvvy/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-instagram"/></svg>View this post on Instagram</a>
-            </blockquote>
-            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/Daxz-lmOpBz/" data-instgrm-version="14">
-              <a href="https://www.instagram.com/reel/Daxz-lmOpBz/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-instagram"/></svg>View this reel on Instagram</a>
-            </blockquote>
-            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DehOBX1EUz3/" data-instgrm-version="14">
-              <a href="https://www.instagram.com/p/DehOBX1EUz3/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-instagram"/></svg>View this post on Instagram</a>
-            </blockquote>
-            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DbGgeb6x6fl/" data-instgrm-version="14">
-              <a href="https://www.instagram.com/reel/DbGgeb6x6fl/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-instagram"/></svg>View this reel on Instagram</a>
-            </blockquote>
+            <div class="ig-item"><div class="ig-clip">
+              <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DTiVWJXDvvy/" data-instgrm-version="14">
+                <a href="https://www.instagram.com/p/DTiVWJXDvvy/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-instagram"/></svg>View this post on Instagram</a>
+              </blockquote>
+            </div></div>
+            <div class="ig-item"><div class="ig-clip">
+              <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/Daxz-lmOpBz/" data-instgrm-version="14">
+                <a href="https://www.instagram.com/reel/Daxz-lmOpBz/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-instagram"/></svg>View this reel on Instagram</a>
+              </blockquote>
+            </div></div>
+            <div class="ig-item"><div class="ig-clip">
+              <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DehOBX1EUz3/" data-instgrm-version="14">
+                <a href="https://www.instagram.com/p/DehOBX1EUz3/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-instagram"/></svg>View this post on Instagram</a>
+              </blockquote>
+            </div></div>
+            <div class="ig-item"><div class="ig-clip">
+              <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DbGgeb6x6fl/" data-instgrm-version="14">
+                <a href="https://www.instagram.com/reel/DbGgeb6x6fl/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-instagram"/></svg>View this reel on Instagram</a>
+              </blockquote>
+            </div></div>
           </div>
         </div>
       </section>
