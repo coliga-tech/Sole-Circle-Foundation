@@ -488,29 +488,33 @@
     .subscribe-row { display: grid; gap: 10px; }
 
     .ig-grid { display: grid; gap: 20px; margin-top: 48px; align-items: start; }
-    /* Phones: swipeable row instead of four tall stacked posts */
+    /* Phones: swipeable row instead of four stacked tiles */
     @media (max-width: 599px) {
       .ig-grid { grid-auto-flow: column; grid-auto-columns: 84%; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 12px; margin-right: -16px; padding-right: 16px; }
       .ig-grid > * { scroll-snap-align: start; }
     }
-    /* Every post sits in an identical frame: Instagram's profile bar + a 4:5 media area.
-    Taller embeds are trimmed at the bottom; shorter ones get white space below. */
-    .ig-item {
-      container-type: inline-size;
-      background: #fff; border: 1px solid var(--line); border-radius: 16px;
-      box-shadow: var(--shadow); overflow: hidden;
+    /* Instagram tiles: identical rectangles, square corners, photo only.
+       Change --tile-ratio to 4 / 5 for tall rectangles. Nudge a crop with object-position on its <img>. */
+    .ig-tile {
+      --tile-ratio: 1 / 1;
+      position: relative; display: block; overflow: hidden;
+      aspect-ratio: var(--tile-ratio);
+      background: #222222;
     }
-    .ig-clip {
-      --ig-header: 62px;                          /* Instagram's profile bar; adjust if the crop looks off */
-      height: calc(var(--ig-header) + 125cqw);    /* 125cqw = a 4:5 image at the card's width */
-      overflow: hidden;
+    .ig-tile img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
+    .ig-tile::after { /* hover shade */
+      content: ""; position: absolute; inset: 0;
+      background: rgba(20, 38, 61, 0); transition: background .25s ease;
     }
-    /* Before Instagram's script runs (or if it's blocked), each post shows as a tidy link tile */
-    .ig-grid blockquote.instagram-media { margin: 0; padding: 20px; height: 100%; display: grid; place-items: center; background: #fff; border: 0; }
-    .ig-grid blockquote.instagram-media a { display: grid; justify-items: center; gap: 10px; font-weight: 800; text-decoration: none; text-align: center; }
-    .ig-grid blockquote.instagram-media svg { width: 36px; height: 36px; }
-    /* Once rendered, the embed fills the frame width; the frame handles corners and shadow */
-    .ig-grid iframe.instagram-media { min-width: 0 !important; width: 100% !important; max-width: none !important; margin: 0 !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
+    .ig-tile svg {
+      position: absolute; top: 50%; left: 50%; z-index: 1;
+      width: 44px; height: 44px; margin: -22px 0 0 -22px;
+      color: #fff; opacity: 0; transform: scale(.8);
+      transition: opacity .25s ease, transform .25s ease;
+    }
+    .ig-tile:hover img, .ig-tile:focus-visible img { transform: scale(1.05); }
+    .ig-tile:hover::after, .ig-tile:focus-visible::after { background: rgba(20, 38, 61, .45); }
+    .ig-tile:hover svg, .ig-tile:focus-visible svg { opacity: 1; transform: scale(1); }
 
     /* =========================================================
        FORMS
@@ -1024,30 +1028,25 @@
             </div>
           </div>
 
-          <!-- INSTAGRAM POSTS — official embeds. Instagram's script (loaded only when this
-               section scrolls near view) turns each blockquote into the live post.
-               To change a post, swap the permalink in both data-instgrm-permalink and the link. -->
+          <!-- INSTAGRAM POSTS — photo tiles that open each post on Instagram.
+               To change a post: swap the href and the image file in images/. -->
           <div class="ig-grid">
-            <div class="ig-item"><div class="ig-clip">
-              <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DTiVWJXDvvy/" data-instgrm-version="14">
-                <a href="https://www.instagram.com/p/DTiVWJXDvvy/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-instagram"/></svg>View this post on Instagram</a>
-              </blockquote>
-            </div></div>
-            <div class="ig-item"><div class="ig-clip">
-              <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/Daxz-lmOpBz/" data-instgrm-version="14">
-                <a href="https://www.instagram.com/reel/Daxz-lmOpBz/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-instagram"/></svg>View this reel on Instagram</a>
-              </blockquote>
-            </div></div>
-            <div class="ig-item"><div class="ig-clip">
-              <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DehOBX1EUz3/" data-instgrm-version="14">
-                <a href="https://www.instagram.com/p/DehOBX1EUz3/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-instagram"/></svg>View this post on Instagram</a>
-              </blockquote>
-            </div></div>
-            <div class="ig-item"><div class="ig-clip">
-              <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DbGgeb6x6fl/" data-instgrm-version="14">
-                <a href="https://www.instagram.com/reel/DbGgeb6x6fl/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-instagram"/></svg>View this reel on Instagram</a>
-              </blockquote>
-            </div></div>
+            <a class="ig-tile" href="https://www.instagram.com/p/DTiVWJXDvvy/" target="_blank" rel="noopener" aria-label="View our MLK Natatorium post on Instagram (opens in new tab)">
+              <img src="images/mlk-natatorium.jpg" alt="Sole Circle Foundation leader with community and city leaders at an event" loading="lazy" style="object-position: 50% 50%" />
+              <svg aria-hidden="true"><use href="#i-instagram"/></svg>
+            </a>
+            <a class="ig-tile" href="https://www.instagram.com/p/Daxz-lmOpBz/" target="_blank" rel="noopener" aria-label="View our Sole Play Gaming post on Instagram (opens in new tab)">
+              <img src="images/soleplay-gaming.jpg" alt="The Sole Circle Foundation logo over pink and white flowers" loading="lazy" style="object-position: 50% 45%" />
+              <svg aria-hidden="true"><use href="#i-instagram"/></svg>
+            </a>
+            <a class="ig-tile" href="https://www.instagram.com/p/DehOBX1EUz3/" target="_blank" rel="noopener" aria-label="View our Pouring Into Parents post on Instagram (opens in new tab)">
+              <img src="images/pouring-into-parents.jpg" alt="Sole Circle Foundation team and guests on stage" loading="lazy" style="object-position: 50% 50%" />
+              <svg aria-hidden="true"><use href="#i-instagram"/></svg>
+            </a>
+            <a class="ig-tile" href="https://www.instagram.com/reel/DbGgeb6x6fl/" target="_blank" rel="noopener" aria-label="View our Black Girls Code reel on Instagram (opens in new tab)">
+              <img src="images/black-girls-code.jpg" alt="Black Girls Code students reacting with excitement during an event" loading="lazy" style="object-position: 50% 75%" />
+              <svg aria-hidden="true"><use href="#i-instagram"/></svg>
+            </a>
           </div>
         </div>
       </section>
@@ -1613,26 +1612,6 @@
     document.querySelectorAll('.play-btn').forEach(btn => btn.addEventListener('click', () => {
       document.getElementById('video-note').textContent = 'Our founders’ videos are coming soon. Check back shortly!';
     }));
-
-    /* =========================================================
-       INSTAGRAM EMBEDS — load Instagram's script only when the posts
-       are about to scroll into view (keeps the first page load fast)
-       ========================================================= */
-    const igGrid = document.querySelector('.ig-grid');
-    function loadInstagram() {
-      if (window.instgrm) { window.instgrm.Embeds.process(); return; }
-      if (document.getElementById('ig-embed-js')) return;
-      const s = document.createElement('script');
-      s.id = 'ig-embed-js'; s.async = true;
-      s.src = 'https://www.instagram.com/embed.js';
-      document.body.appendChild(s);
-    }
-    if ('IntersectionObserver' in window) {
-      const igObs = new IntersectionObserver(entries => {
-        if (entries.some(en => en.isIntersecting)) { loadInstagram(); igObs.disconnect(); }
-      }, { rootMargin: '800px 0px' });
-      igObs.observe(igGrid);
-    } else { loadInstagram(); }
 
     /* =========================================================
        CALENDAR LINKS (Level Up)
