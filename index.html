@@ -412,6 +412,17 @@
     }
     .videos-grid { display: grid; gap: 22px; max-width: 1100px; margin: 0 auto; }
     .video-card { margin: 0; }
+    /* Founders — two portrait cards under the mission statement (stack on phones) */
+    .founders-grid { display: grid; gap: 24px; max-width: 880px; margin: 0 auto; }
+    @media (min-width: 600px) { .founders-grid { grid-template-columns: 1fr 1fr; } }
+    .founder-card {
+      margin: 0; background: #fff; border-radius: var(--radius); overflow: hidden;
+      box-shadow: 0 20px 40px -24px rgba(20, 38, 61, .5);
+    }
+    .founder-card img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; display: block; }
+    .founder-card figcaption { display: grid; gap: 2px; padding: 18px 22px 20px; }
+    .founder-card strong { font: 700 1.2rem var(--font-display); color: var(--ink); }
+    .founder-card span { font-weight: 600; font-size: .92rem; color: var(--muted); }
     .video-frame {
       position: relative; margin: 0 auto;
       aspect-ratio: 16 / 9; border-radius: 24px; overflow: hidden;
@@ -844,7 +855,7 @@
         <summary>About Us <svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></summary>
         <ul class="drawer-links">
           <li><button type="button" data-goto="home" data-section="mission">Our Mission<small>Why we exist</small></button></li>
-          <li><button type="button" data-goto="home" data-section="mission">Messages From Our Founders<small>In their own words</small></button></li>
+          <li><button type="button" data-goto="home" data-section="mission">Meeet Our Founders<small>In their own words</small></button></li>
           <li class="soon">More coming soon</li>
         </ul>
       </details>
@@ -916,29 +927,46 @@
             <p>We are a non-profit organization committed to partnering with communities to develop and sustain programs that bridge the digital divide through technology, design, and wellness for underserved youth.</p>
           </div>
 
-          <!-- FOUNDERS VIDEOS — when ready, replace each .play-btn + caption with e.g.:
-               <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID" title="A message from FOUNDER NAME"
-                       allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-               or <video src="founder-1.mp4" controls poster="poster.jpg"></video> -->
-          <div class="videos-grid">
-            <figure class="video-card">
-              <div class="video-frame">
-                <button class="play-btn" type="button" aria-describedby="video-note">
-                  <svg aria-hidden="true"><use href="#i-play"/></svg><span class="sr-only">Play: A message from our co-founder</span>
-                </button>
-                <figcaption class="video-caption">Dr. Erica Jones<small>Co-Founder · Title</small></figcaption>
-              </div>
+          <!-- FOUNDERS — portrait cards. Replace "Founder Name" / "Co-Founder · Title" and the alt text. -->
+          <div class="founders-grid">
+            <figure class="founder-card">
+              <img src="images/founder-1.jpg" alt="Portrait of Founder Name, Co-Founder of The Sole Circle Foundation" width="1000" height="1500" loading="lazy" style="object-position: 50% 15%" />
+              <figcaption><strong>Founder Name</strong><span>Co-Founder · Title</span></figcaption>
             </figure>
-            <figure class="video-card">
-              <div class="video-frame">
-                <button class="play-btn" type="button" aria-describedby="video-note">
-                  <svg aria-hidden="true"><use href="#i-play"/></svg><span class="sr-only">Play: A message from our co-founder</span>
-                </button>
-                <figcaption class="video-caption">Anthony "TJ" Bennett<small>Co-Founder · Title</small></figcaption>
-              </div>
+            <figure class="founder-card">
+              <img src="images/founder-2.jpg" alt="Portrait of Founder Name, Co-Founder of The Sole Circle Foundation" width="1000" height="963" loading="lazy" style="object-position: 70% 30%" />
+              <figcaption><strong>Founder Name</strong><span>Co-Founder · Title</span></figcaption>
             </figure>
           </div>
-          <p class="video-note" id="video-note" role="status" aria-live="polite"></p>
+
+          <!-- SAVED FOR LATER: founders' video messages. A <template> is never shown on the page.
+               To bring the videos back, move everything inside <template>…</template> out of it
+               and delete the .founders-grid block above (or keep both). -->
+          <template id="founders-videos-saved">
+            <!-- FOUNDERS VIDEOS — when ready, replace each .play-btn + caption with e.g.:
+                 <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID" title="A message from FOUNDER NAME"
+                         allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+                 or <video src="founder-1.mp4" controls poster="poster.jpg"></video> -->
+            <div class="videos-grid">
+              <figure class="video-card">
+                <div class="video-frame">
+                  <button class="play-btn" type="button" aria-describedby="video-note">
+                    <svg aria-hidden="true"><use href="#i-play"/></svg><span class="sr-only">Play: A message from our co-founder</span>
+                  </button>
+                  <figcaption class="video-caption">Founder Name<small>Co-Founder · Title</small></figcaption>
+                </div>
+              </figure>
+              <figure class="video-card">
+                <div class="video-frame">
+                  <button class="play-btn" type="button" aria-describedby="video-note">
+                    <svg aria-hidden="true"><use href="#i-play"/></svg><span class="sr-only">Play: A message from our co-founder</span>
+                  </button>
+                  <figcaption class="video-caption">Founder Name<small>Co-Founder · Title</small></figcaption>
+                </div>
+              </figure>
+            </div>
+            <p class="video-note" id="video-note" role="status" aria-live="polite"></p>
+          </template>
 
           <!-- OUR WORK — JED-style image cards (also listed in the hamburger "Our Work" group).
                All photos are cropped to the same 4:3 frame so the cards stay equal size;
