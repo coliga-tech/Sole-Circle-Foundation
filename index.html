@@ -38,7 +38,8 @@
       --band-hero: #3D6A99;
       --band-events: #FFFFFF;
       --band-flyer: #E2F5EE;
-      --band-mission: #6E9BCB;
+      --band-mission: #111111;     /* Our Mission + founders */
+      --band-ecosystem: #6E9BCB;   /* The Ecosystem / Our Work cards */
       --band-connect: #FFF9F0;
       --nav-bg: #222222;      /* matches the logo marquee */
 
@@ -399,13 +400,13 @@
     .flyer-dates { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; color: var(--mint-deep); margin-bottom: 8px; }
     .flyer-dates svg { width: 18px; height: 18px; }
 
-    /* ---- 4. Mission + founders video + Our Work (#6E9BCB) ---- */
-    .band-mission { background: var(--band-mission); color: var(--ink-strong); padding-top: 64px; padding-bottom: 72px; }
+    /* ---- 3. Mission + founders (black) ---- */
+    .band-mission { background: var(--band-mission); color: #fff; padding-top: 64px; padding-bottom: 72px; border-top: 1px solid rgba(255,255,255,.08); }
     .mission-statement { text-align: center; max-width: 900px; margin: 0 auto 36px; }
-    .mission-statement .eyebrow { color: var(--ink-strong); }
+    .mission-statement .eyebrow { color: var(--mint); }
     .mission-statement p {
       font: 600 clamp(1.35rem, 3.6vw, 2.1rem)/1.3 var(--font-display);
-      color: var(--ink-strong); letter-spacing: -.01em; margin: 0;
+      color: #fff; letter-spacing: -.01em; margin: 0;
     }
     .videos-grid { display: grid; gap: 22px; max-width: 1100px; margin: 0 auto; }
     .video-card { margin: 0; }
@@ -449,7 +450,9 @@
     .video-caption small { display: block; font-weight: 500; opacity: .8; }
     .video-note { text-align: center; font-weight: 700; margin: 14px 0 0; min-height: 1.5em; }
 
-    .work-head { text-align: center; margin: 64px 0 28px; scroll-margin-top: calc(var(--header-h) + 16px); }
+    /* ---- 4. The Ecosystem / Our Work (#6E9BCB) ---- */
+    .band-ecosystem { background: var(--band-ecosystem); color: var(--ink-strong); padding-top: 64px; padding-bottom: 72px; }
+    .work-head { text-align: center; margin: 0 0 28px; }
     .work-head h2 { color: var(--ink-strong); font-size: clamp(1.7rem, 4.5vw, 2.4rem); margin: 0; }
     .work-grid { display: grid; gap: 20px; }
     .work-card {
@@ -927,11 +930,11 @@
           <!-- FOUNDERS — portrait cards. Replace "Founder Name" / "Co-Founder · Title" and the alt text. -->
           <div class="founders-grid">
             <figure class="founder-card">
-              <img src="images/Dr-Erica-Jones.jpg" alt="Portrait of Founder Name, Co-Founder of The Sole Circle Foundation" width="1000" height="1500" loading="lazy" style="object-position: 50% 15%" />
+              <img src="images/Dr-Erica-Jones.jpg" alt="Portrait of Dr. Erica Jones, Co-Founder of The Sole Circle Foundation" width="1000" height="1500" loading="lazy" style="object-position: 50% 15%" />
               <figcaption><strong>Dr. Erica Jones</strong><span>Co-Founder · Title</span></figcaption>
             </figure>
             <figure class="founder-card">
-              <img src="images/Anthony-TJ-Bennett.jpg" alt="Portrait of Founder Name, Co-Founder of The Sole Circle Foundation" width="1000" height="963" loading="lazy" style="object-position: 70% 30%" />
+              <img src="images/Anthony-TJ-Bennett.jpg" alt="Portrait of Anthony 'TJ' Bennett, Co-Founder of The Sole Circle Foundation" width="1000" height="963" loading="lazy" style="object-position: 70% 30%" />
               <figcaption><strong>Anthony "TJ" Bennett</strong><span>Co-Founder · Title</span></figcaption>
             </figure>
           </div>
@@ -964,12 +967,15 @@
             </div>
             <p class="video-note" id="video-note" role="status" aria-live="polite"></p>
           </template>
+        </div>
+      </section>
 
-          <!-- OUR WORK — JED-style image cards (also listed in the hamburger "Our Work" group).
-               All photos are cropped to the same 4:3 frame so the cards stay equal size;
-               nudge a crop with object-position on the <img>. -->
-          <div class="work-head" id="our-work">
-            <h2>The Ecosystem</h2>
+      <!-- 4. THE ECOSYSTEM / OUR WORK (#6E9BCB) — JED-style image cards (also listed in the hamburger "Our Work" group).
+          Nudge a photo's crop with object-position on its <img>. -->
+      <section class="band band-ecosystem" id="our-work" aria-labelledby="our-work-title">
+        <div class="band-inner">
+          <div class="work-head">
+            <h2 id="our-work-title">The Ecosystem</h2>
           </div>
           <div class="work-grid">
             <article class="work-card">
