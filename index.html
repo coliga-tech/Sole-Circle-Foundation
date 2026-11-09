@@ -758,6 +758,42 @@
     }
     .page-note { margin: 28px 0 0; color: var(--muted); display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
     .narrow-wrap { max-width: 868px; } /* centers the page: 820px card + side padding */
+
+    /* =========================================================
+       UPCOMING EVENTS PAGE — cream for upcoming, cream → black fade for past
+       ========================================================= */
+    .events-upcoming { background: var(--cream); }
+    .events-upcoming .wrap { padding-bottom: 72px; }
+    .events-past {
+      /* --fade-length = how long the cream takes to turn black */
+      --fade-length: 260px;
+      background: linear-gradient(180deg, var(--cream) 0, #000000 var(--fade-length));
+      color: #fff;
+    }
+    .events-past .wrap { padding-top: calc(var(--fade-length) - 20px); padding-bottom: 80px; }
+    .past-title { color: #fff; font-size: clamp(1.8rem, 5vw, 2.6rem); margin: 0 0 24px; }
+
+    .ev-grid { display: grid; gap: 24px; }
+    @media (min-width: 760px) { .ev-grid { grid-template-columns: 1fr 1fr; } }
+    .ev-card { display: flex; flex-direction: column; overflow: hidden; background: #fff; color: var(--ink); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .ev-card .event-banner { border-radius: 0; margin: 0; }
+    .ev-ph { aspect-ratio: 940 / 529; }
+    .ev-body { display: flex; flex-direction: column; gap: 10px; flex: 1; padding: 22px 24px 26px; }
+    .ev-body h3 { font-size: 1.3rem; margin: 0; }
+    .ev-body p { margin: 0; color: var(--muted); }
+    .ev-body .tag, .ev-body .event-date { align-self: flex-start; margin: 0; }
+    .ev-body .text-link, .ev-body .btn { align-self: flex-start; margin-top: auto; }
+    .btn.is-disabled { opacity: .5; pointer-events: none; }
+
+    /* Menu drawer: a direct link styled like the dropdown headings */
+    .drawer-toplink {
+      display: flex; align-items: center; justify-content: space-between; width: 100%;
+      padding: 18px 4px; border: 0; border-bottom: 1px solid var(--line);
+      background: none; cursor: pointer; text-align: left;
+      font: 700 1.2rem var(--font-display); color: var(--blue-deep);
+    }
+    .drawer-toplink svg { width: 20px; height: 20px; color: var(--muted); }
+    .drawer-toplink:hover svg { color: var(--blue-deep); }
     .levelup .tag.past { margin-left: 0; }
     .event-banner { display: block; width: 100%; height: auto; aspect-ratio: 940 / 529; object-fit: cover; border-radius: var(--radius-sm); margin: 0 0 16px; background: #2a1a4a; }
 
@@ -1001,6 +1037,9 @@
         </ul>
       </details>
 
+      <!-- Upcoming Events — a direct link (no dropdown) -->
+      <button class="drawer-toplink" type="button" data-goto="upcoming-events">Upcoming Events <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+
       <!-- I Want To Help — TODO: add pages as they're written -->
       <details class="drawer-group">
         <summary>I Want To Help <svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></summary>
@@ -1062,11 +1101,11 @@
           <div class="founders-grid">
             <figure class="founder-card">
               <img src="images/Dr-Erica-Jones.jpg" alt="Portrait of Dr. Erica Jones, Co-Founder of The Sole Circle Foundation" width="1000" height="1500" loading="lazy" style="object-position: 50% 15%" />
-              <figcaption><strong>Dr. Erica Jones</strong><span>Co-Founder · Title</span></figcaption>
+              <figcaption><strong>Dr. Erica Jones</strong><span>Co-Founder/span></figcaption>
             </figure>
             <figure class="founder-card">
               <img src="images/Anthony-TJ-Bennett.jpg" alt="Portrait of Anthony 'TJ' Bennett, Co-Founder of The Sole Circle Foundation" width="1000" height="963" loading="lazy" style="object-position: 70% 30%" />
-              <figcaption><strong>Anthony "TJ" Bennett</strong><span>Co-Founder · Title</span></figcaption>
+              <figcaption><strong>Anthony "TJ" Bennett</strong><span>Co-Founder</span></figcaption>
             </figure>
           </div>
 
@@ -1582,6 +1621,62 @@
         </div>
 
         <p class="page-note">Looking for mental health support? <button class="text-link" type="button" data-goto="mental-health">Mental health resources <svg aria-hidden="true"><use href="#i-arrow"/></svg></button></p>
+      </div>
+    </section>
+
+    <!-- =====================================================
+      UPCOMING EVENTS  (menu → "Upcoming Events")
+      Upcoming events sit on cream; past events sit below, where the cream fades to black.
+      To add an event: copy an <article class="ev-card"> into the right grid.
+      To retire one: move its card from the Upcoming grid to the Past grid and add the "Past event" tag.
+      ===================================================== -->
+    <section class="panel" id="upcoming-events" aria-labelledby="ue-title" tabindex="-1">
+      <div class="events-upcoming">
+        <div class="wrap">
+          <header class="page-head">
+            <h2 id="ue-title">Upcoming Events</h2>
+          </header>
+
+          <div class="ev-grid">
+            <!-- PLACEHOLDER EVENT — replace the banner, date, title, details, and RSVP link -->
+            <article class="ev-card">
+              <div class="ph ev-ph" aria-hidden="true"><svg><use href="#i-image"/></svg>Event flyer (940 × 529)</div>
+              <div class="ev-body">
+                <span class="event-date">Date TBA</span>
+                <h3>Event Title</h3>
+                <ul class="event-meta">
+                  <li><svg aria-hidden="true"><use href="#i-clock"/></svg>Time TBA</li>
+                  <li><svg aria-hidden="true"><use href="#i-pin"/></svg>Location TBA</li>
+                </ul>
+                <p>A short description of the event goes here.</p>
+                <span class="btn btn-blue btn-sm is-disabled" aria-disabled="true">RSVP coming soon</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <div class="events-past">
+        <div class="wrap">
+          <h2 class="past-title">Past Events</h2>
+
+          <div class="ev-grid">
+            <article class="ev-card">
+              <img class="event-banner" src="images/level-up-gaming-wellness.jpg" alt="Gaming and Wellness, February 22. Presented with Free To Be Mvmt, Ape Water, Ghost, The Sole Circle Foundation, Sole Play Gaming, and Come As You Are." width="940" height="529" loading="lazy" />
+              <div class="ev-body">
+                <span class="tag past">Past event</span>
+                <h3>Level Up: Gaming and Wellness</h3>
+                <ul class="event-meta">
+                  <li><svg aria-hidden="true"><use href="#i-cal"/></svg>Saturday, February 22, 2025</li>
+                  <li><svg aria-hidden="true"><use href="#i-clock"/></svg>12:00 PM – 2:00 PM</li>
+                  <li><svg aria-hidden="true"><use href="#i-pin"/></svg>Sole Play · Decatur, GA</li>
+                </ul>
+                <p>A day of video games, yoga, and wellness workshops to recharge your mind and body.</p>
+                <button class="text-link" type="button" data-goto="design">Event details <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+              </div>
+            </article>
+          </div>
+        </div>
       </div>
     </section>
 
