@@ -753,7 +753,8 @@
     .program-body .btn { align-self: flex-start; margin-top: 6px; }
     @media (min-width: 900px) {
       .program-card { grid-template-columns: 5fr 6fr; }
-      .program-card > img { height: 100%; min-height: 340px; aspect-ratio: auto; }
+      .program-card { min-height: 340px; }
+      .program-card > img { height: 0; min-height: 100%; aspect-ratio: auto; } /* photo fills the card's height instead of setting it */
       .program-body { justify-content: center; padding: 36px 40px; }
     }
     .page-note { margin: 28px 0 0; color: var(--muted); display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
@@ -913,7 +914,7 @@
       .events-grid { grid-template-columns: repeat(3, 1fr); }
       .flyer-grid { grid-template-columns: 1fr 1.05fr; gap: 64px; }
       .work-grid { grid-template-columns: repeat(3, 1fr); }
-      .connect-grid { grid-template-columns: 1fr 1.1fr; align-items: center; gap: 56px; }
+      .connect-grid { grid-template-columns: 1fr 1.1fr; align-items: start; gap: 56px; }
       .wrap { padding: 44px 24px 56px; }
 
       .tech-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 24px; align-items: start; }
@@ -1022,8 +1023,7 @@
         <summary>About Us <svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></summary>
         <ul class="drawer-links">
           <li><button type="button" data-goto="home" data-section="mission">Our Mission<small>Why we exist</small></button></li>
-          <li><button type="button" data-goto="home" data-section="mission">Meeet Our Founders<small>In their own words</small></button></li>
-          <li class="soon">More coming soon</li>
+          <li><button type="button" data-goto="home" data-section="mission">Meet Our Founders<small></small></button></li>
         </ul>
       </details>
 
@@ -1047,7 +1047,6 @@
           <li><button type="button" data-goto="donate">Donate<small>Support our programs</small></button></li>
           <li><button type="button" data-goto="home" data-section="sneaker-drive">Sneaker Donation Drive<small>Drop off gently used sneakers</small></button></li>
           <li><button type="button" data-goto="contact">Volunteer<small>Get in touch with our team</small></button></li>
-          <li class="soon">More coming soon</li>
         </ul>
       </details>
     </div>
@@ -1104,7 +1103,7 @@
               <figcaption><strong>Dr. Erica Jones</strong><span>Co-Founder/span></figcaption>
             </figure>
             <figure class="founder-card">
-              <img src="images/Anthony-TJ-Bennett.jpg" alt="Portrait of Anthony 'TJ' Bennett, Co-Founder of The Sole Circle Foundation" width="1000" height="963" loading="lazy" style="object-position: 70% 30%" />
+              <img src="images/Anthony-TJ-Bennett.jpg" alt="Portrait of Anthony 'TJ' Bennett, Co-Founder of The Sole Circle Foundation" width="784" height="980" loading="lazy" style="object-position: 50% 50%" />
               <figcaption><strong>Anthony "TJ" Bennett</strong><span>Co-Founder</span></figcaption>
             </figure>
           </div>
@@ -1162,7 +1161,7 @@
               <div class="work-body">
                 <h3>Wellness and Community</h3>
                 <!-- TODO: final copy -->
-                <p>The health of the individual is just as important as the health of the collective. Our Kicks and Cuts program provides shoes and haircuts to the community.</p>
+                <p>The health of the individual is just as important as the health of the collective. Our Kicks + Cuts program provides shoes and haircuts to the community.</p>
                 <button class="text-link" type="button" data-goto="community-health">Learn more <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
               </div>
             </article>
@@ -1171,7 +1170,7 @@
               <div class="work-body">
                 <h3>Sole Play Gaming Lounge</h3>
                 <!-- TODO: final copy -->
-                <p>The Sole Play Gaming Lounge is an e-sports facility in Decatur, where students can lock-in to gaming tournaments. We offer options for weekly member visits.</p>
+                <p>The Sole Play Gaming Lounge is an esports facility in Decatur, where attendees can lock-in to gaming tournaments. We offer options for weekly member visits.</p>
                 <button class="text-link" type="button" data-goto="design">Learn more <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
               </div>
             </article>
@@ -1616,6 +1615,14 @@
               <h3>Yoga and Gatherings</h3>
               <p>Yoga and Gatherings is a community-focused program designed to foster connection, wellness, and mindfulness through the practice of yoga. Participants of all skill levels come together to engage in guided sessions led by experienced instructors. Each gathering not only emphasizes physical postures and breathwork but also encourages social interaction and personal growth. The program aims to create a supportive environment where individuals can share experiences, establish friendships, and cultivate a sense of belonging, all while enhancing their physical and mental well-being through the art of yoga.</p>
               <button class="btn btn-blue" type="button" data-gallery="yoga-gatherings"><svg aria-hidden="true"><use href="#i-image"/></svg>View photo gallery</button>
+            </div>
+          </article>
+
+          <article class="program-card">
+            <img src="images/sensory-santa.jpg" alt="Santa smiling with a student in a holiday sweater in front of a fireplace backdrop" loading="lazy" style="object-position: 50% 20%" />
+            <div class="program-body">
+              <h3>Sensory Santa Experience</h3>
+              <p>Often, families who have children with special needs miss out on common experiences due to a lack of access. We partnered with four local schools to provide a sensory Santa experience to all of these families. We also provided gifts for all teachers in these schools. It takes a village, and we show up for our community!</p>
             </div>
           </article>
         </div>
