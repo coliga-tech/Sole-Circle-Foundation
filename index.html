@@ -53,6 +53,7 @@
 
     /* ---------- Reset / base (mobile-first) ---------- */
     *, *::before, *::after { box-sizing: border-box; }
+    [hidden] { display: none !important; } /* make the hidden attribute win over display rules */
     html { -webkit-text-size-adjust: 100%; }
     body {
       margin: 0;
@@ -705,6 +706,107 @@
     .footer-legal a:hover { color: var(--mint); }
 
     /* =========================================================
+       PROGRAM PAGES (Creative Technology, Wellness and Community, Sole Play Gaming Lounge)
+       ========================================================= */
+    .page-head { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 24px; }
+    .page-head h2 { font-size: clamp(1.8rem, 5vw, 2.6rem); color: var(--blue-deep); margin: 0; }
+    .social-link-sm { width: 44px; height: 44px; }
+    .social-link-sm svg { width: 20px; height: 20px; }
+
+    .program-list { display: grid; gap: 24px; }
+    .program-card {
+      display: grid; overflow: hidden;
+      background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow);
+    }
+    .program-card > img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; background: var(--blue-soft); }
+    .program-body { display: flex; flex-direction: column; gap: 12px; padding: 24px; }
+    .program-body h3 { font-size: clamp(1.4rem, 3vw, 1.8rem); color: var(--ink); margin: 0; }
+    .program-body p { margin: 0; }
+    .program-body .btn { align-self: flex-start; margin-top: 6px; }
+    @media (min-width: 900px) {
+      .program-card { grid-template-columns: 5fr 6fr; }
+      .program-card > img { height: 100%; min-height: 340px; aspect-ratio: auto; }
+      .program-body { justify-content: center; padding: 36px 40px; }
+    }
+    .page-note { margin: 28px 0 0; color: var(--muted); display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+    .single-card { max-width: 820px; }
+    .levelup .tag.past { margin-left: 0; }
+
+    /* =========================================================
+       MENTAL HEALTH (crisis box + independent drawers)
+       ========================================================= */
+    .mh-wrap { max-width: 980px; }
+    .crisis-box { display: grid; gap: 16px; margin-bottom: 28px; padding: 24px; border-radius: var(--radius); background: var(--ink); color: #fff; }
+    .crisis-box h3 { color: #fff; font-size: clamp(1.2rem, 3vw, 1.5rem); margin: 0; }
+    .crisis-box h4 { font: 800 .75rem var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: var(--mint); margin: 0 0 6px; }
+    .crisis-box ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+    .crisis-box a { color: #fff; font-weight: 800; }
+    .crisis-box a:hover { color: var(--mint); }
+    .crisis-cols { display: grid; gap: 16px; }
+    @media (min-width: 700px) { .crisis-cols { grid-template-columns: 1fr 1fr; } }
+
+    .mh-tools { display: flex; justify-content: flex-end; margin-bottom: 10px; }
+    .mh-drawers { display: grid; gap: 12px; }
+    .mh-drawer { background: #fff; border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; }
+    .mh-drawer > summary {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      list-style: none; cursor: pointer; padding: 18px 20px;
+      font: 700 1.1rem var(--font-display); color: var(--blue-deep);
+    }
+    .mh-drawer > summary::-webkit-details-marker { display: none; }
+    .mh-drawer > summary:hover { background: var(--blue-soft); }
+    .mh-drawer > summary .chev { width: 20px; height: 20px; flex: none; color: var(--muted); transition: transform .25s; }
+    .mh-drawer[open] > summary .chev { transform: rotate(180deg); }
+    .mh-drawer-body { padding: 4px 20px 22px; }
+    .mh-drawer-body h4 { font-size: 1rem; margin: 6px 0 8px; }
+    .mh-list { margin: 0; padding-left: 18px; display: grid; gap: 8px; }
+    .mh-list ul { margin: 4px 0 0; padding-left: 18px; color: var(--muted); }
+    .mh-cols { display: grid; gap: 18px; }
+    @media (min-width: 700px) { .mh-cols { grid-template-columns: 1fr 1fr; } }
+
+    /* =========================================================
+       PHOTO GALLERY MODAL (shared by every "View photo gallery" button)
+       ========================================================= */
+    body.modal-open { overflow: hidden; }
+    .gallery-modal {
+      width: min(1100px, calc(100vw - 32px)); max-width: none;
+      max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px);
+      padding: 0; border: 0; border-radius: var(--radius);
+      background: #fff; color: var(--ink); overflow: hidden;
+    }
+    .gallery-modal[open] { display: flex; flex-direction: column; }
+    .gallery-modal::backdrop { background: rgba(20, 38, 61, .75); }
+    .gm-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+    .gm-head h2 { font-size: 1.2rem; margin: 0; color: var(--blue-deep); }
+    .gm-count { font-weight: 600; font-size: .9rem; color: var(--muted); }
+    .gm-body { flex: 1; overflow-y: auto; padding: 16px 18px 20px; }
+    .gm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+    .gm-thumb { aspect-ratio: 1; padding: 0; border: 0; border-radius: 8px; overflow: hidden; cursor: pointer; background: var(--blue-soft); }
+    .gm-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s ease; }
+    .gm-thumb:hover img, .gm-thumb:focus-visible img { transform: scale(1.05); }
+    .gm-viewer { display: grid; gap: 12px; }
+    .gm-viewer[hidden] { display: none; }
+    .gm-stage { position: relative; display: grid; place-items: center; height: min(68vh, 720px); border-radius: 12px; background: #111; }
+    .gm-stage img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .gm-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%;
+      border: 0; cursor: pointer; background: rgba(255,255,255,.9); color: var(--ink);
+    }
+    .gm-nav:hover { background: #fff; }
+    .gm-nav svg { width: 22px; height: 22px; }
+    .gm-prev { left: 12px; } .gm-prev svg { transform: rotate(180deg); }
+    .gm-next { right: 12px; }
+    .gm-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .gm-foot { padding: 12px 18px; border-top: 1px solid var(--line); }
+    .gm-foot[hidden] { display: none; }
+    @media (max-width: 599px) {
+      .gallery-modal { width: 100vw; max-height: 100vh; max-height: 100dvh; height: 100dvh; border-radius: 0; }
+      .gm-grid { grid-template-columns: repeat(3, 1fr); gap: 4px; }
+      .gm-stage { height: 60vh; }
+    }
+
+    /* =========================================================
        BREAKPOINTS (mobile-first → up)
        ========================================================= */
     @media (min-width: 600px) {
@@ -864,9 +966,9 @@
       <details class="drawer-group" open>
         <summary>Our Work <svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></summary>
         <ul class="drawer-links">
-          <li><button type="button" data-goto="technology"><span><span class="dot" style="background:var(--blue-deep)"></span>Creative Technology</span><small>Digital literacy classes &amp; device access</small></button></li>
-          <li><button type="button" data-goto="community-health"><span><span class="dot" style="background:var(--mint)"></span>Wellness and Community</span><small>Yoga, gatherings &amp; mental health</small></button></li>
-          <li><button type="button" data-goto="design"><span><span class="dot" style="background:#F3B79A"></span>Sole Play Gaming Lounge</span><small>Gaming, design &amp; wellness programs</small></button></li>
+          <li><button type="button" data-goto="technology"><span><span class="dot" style="background:var(--blue-deep)"></span>Creative Technology</span><small>Day Dream sneaker design program</small></button></li>
+          <li><button type="button" data-goto="community-health"><span><span class="dot" style="background:var(--mint)"></span>Wellness and Community</span><small>Yoga and Gatherings, Kicks + Cuts</small></button></li>
+          <li><button type="button" data-goto="design"><span><span class="dot" style="background:#F3B79A"></span>Sole Play Gaming Lounge</span><small>Level Up: Gaming and Wellness</small></button></li>
         </ul>
       </details>
 
@@ -1154,98 +1256,41 @@
     </div>
 
     <!-- =====================================================
-         TECHNOLOGY EDUCATION
+         CREATIVE TECHNOLOGY  (Ecosystem card 1 → "Learn more")
          ===================================================== -->
     <section class="panel" id="technology" aria-labelledby="technology-title" tabindex="-1">
       <div class="wrap">
-        <header class="panel-head">
-          <div>
-            <span class="eyebrow"><svg aria-hidden="true"><use href="#i-cpu"/></svg>Our Work · Creative Technology</span>
-            <h2 id="technology-title">Technology for every family</h2>
-            <p class="lede">The thread that runs through everything we do.</p>
-          </div>
-          <ul class="chips" aria-label="Technology focus areas">
-            <li>Digital Access</li><li>Family Learning</li><li>Digital Literacy Classes</li>
-          </ul>
+        <header class="page-head">
+          <h2 id="technology-title">Creative Technology</h2>
         </header>
 
-        <div class="tech-grid">
-          <div class="stack">
-            <article class="card sponsor-card">
-              <span class="tag">Corporate Sponsor · Classes</span>
-              <p><span class="sponsor-num" aria-hidden="true">1</span>Our Corporate Sponsor, <span class="sponsor">Atlanta University Center Consortium (AUCC)</span>, offers a yearly program to students in Fulton County and Atlanta Public Schools, providing 20 classes per year, with 5 courses per quarter. The instructors teach students technological literacy that is relevant in the age of AI and prompt engineering. Industry professionals with varying degree levels, and volunteers from the local Atlanta community, will comprise the pool of instructors the program chooses to lead each course.</p>
-            </article>
-            <article class="card sponsor-card">
-              <span class="tag mint">Partner · Device Rentals</span>
-              <p><span class="sponsor-num" aria-hidden="true">2</span><span class="sponsor">Georgia State University</span>, a Sole Circle Foundation partner of 7 years, offers laptop and headphone rentals to eligible students to participate in the Atlanta University Center Consortium (AUCC) program. Please register your student below for the program, and you will be contacted regarding options for device rentals.</p>
-            </article>
-          </div>
-
-          <aside class="card form-card" aria-labelledby="reg-title">
-            <h3 id="reg-title">Register your student</h3>
-            <form id="registration-form" novalidate>
-              <div class="form-row">
-                <div class="field">
-                  <label for="r-student">Student name <span class="req">*</span></label>
-                  <input type="text" id="r-student" name="student_name" autocomplete="off" required />
-                </div>
-                <div class="field">
-                  <label for="r-parent">Parent name <span class="req">*</span></label>
-                  <input type="text" id="r-parent" name="parent_name" autocomplete="name" required />
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="field">
-                  <label for="r-school">Current school <span class="req">*</span></label>
-                  <input type="text" id="r-school" name="current_school" required />
-                </div>
-                <div class="field">
-                  <label for="r-grade">Grade level <span class="req">*</span></label>
-                  <select id="r-grade" name="grade_level" required>
-                    <option value="" selected disabled>Select grade</option>
-                    <option>4th</option><option>5th</option><option>6th</option>
-                    <option>7th</option><option>8th</option><option>9th</option>
-                    <option>10th</option><option>11th</option><option>12th</option>
-                  </select>
-                </div>
-              </div>
-              <div class="field">
-                <label for="r-email">Parent email <span class="req">*</span></label>
-                <input type="email" id="r-email" name="parent_email" autocomplete="email" required />
-              </div>
-              <button class="btn btn-blue" type="submit">Register student</button>
-              <p class="form-status" role="status" aria-live="polite"></p>
-            </form>
-          </aside>
+        <div class="program-list">
+          <article class="program-card">
+            <img src="images/sneaker-painting.jpg" alt="Students hand-painting custom sneakers during a Day Dream session" loading="lazy" style="object-position: 50% 45%" />
+            <div class="program-body">
+              <h3>Day Dream</h3>
+              <p>Day Dream cultivates creativity, resilience, and communication skills in young people by meeting them where they are, through sneaker design. Using technology and hands-on learning, participants develop their ideas, collaborate with instructors and peers, and use the tools we provide to create wearable sneaker prototypes.</p>
+              <p>Past partnerships with organizations such as the Atlanta Falcons, Microsoft, the Atlanta Braves, the City of Atlanta, and 100 Girls of Code have enabled us to make a significant impact on communities across Greater Atlanta through student-driven creative technology.</p>
+              <button class="btn btn-blue" type="button" data-gallery="day-dream"><svg aria-hidden="true"><use href="#i-image"/></svg>View photo gallery</button>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
     <!-- =====================================================
-         DESIGN ENGINE
+         SOLE PLAY GAMING LOUNGE  (Ecosystem card 3 → "Learn more")
          ===================================================== -->
     <section class="panel" id="design" aria-labelledby="design-title" tabindex="-1">
       <div class="wrap">
-        <header class="panel-head">
-          <div>
-            <span class="eyebrow"><svg aria-hidden="true"><use href="#i-pen"/></svg>Our Work · Sole Play Gaming Lounge</span>
-            <h2 id="design-title">Design it. Build it. Wear it.</h2>
-            <p class="lede">Digital tools for designing sneakers, web apps, and video games.</p>
-          </div>
-          <ul class="chips" aria-label="Design focus areas">
-            <li>Web &amp; Application Design</li><li>Fashion &amp; Shoe Design</li><li>Gaming Development</li>
-          </ul>
+        <header class="page-head">
+          <h2 id="design-title">Sole Play Gaming Lounge</h2>
+          <a class="social-link social-link-sm" href="https://www.instagram.com/soleplay.gaming/" target="_blank" rel="noopener" aria-label="Sole Play Gaming Lounge on Instagram (opens in new tab)"><svg aria-hidden="true"><use href="#i-instagram"/></svg></a>
         </header>
 
-        <div class="design-grid">
-          <article class="card daydream">
-            <span class="tag mint">Program 1</span>
-            <h3>Day Dream</h3>
-            <p>Our innovative Day Dream program is designed to cultivate creativity, resilience, and effective communication skills in young people by meeting them where they are at with the exploration of sneaker design. By leveraging technology and hands-on learning, participants will develop their ideas, collaborate with instructors and their peers, and utilize provided tools to produce wearable sneaker prototypes. Our previous partnerships with organizations such as the Atlanta Falcons, Microsoft, Atlanta Braves, City of Atlanta, and 100 Girls of Code has enabled us to deliver a significant impact on communities throughout the Greater Atlanta area. Day Dream sessions are offered 3 times a year on a quarterly basis.</p>
-          </article>
-
+        <div class="single-card">
           <article class="card levelup">
-            <span class="tag">Program 2</span><span class="tag past" id="past-badge" hidden>Past event</span>
+            <span class="tag past" id="past-badge" hidden>Past event</span>
             <h3>Level Up: Gaming and Wellness</h3>
             <div class="event-box" aria-label="Event details">
               <div class="event-row"><svg aria-hidden="true"><use href="#i-cal"/></svg><span>Feb 22nd</span></div>
@@ -1257,7 +1302,7 @@
                 <svg aria-hidden="true"><use href="#i-pin"/></svg>
                 <span>106 East Ponce de Leon Avenue<small>Decatur, GA 30030 United States</small></span>
               </a>
-              <div class="cal-links">
+              <div class="cal-links" id="cal-links">
                 <a class="btn btn-white btn-sm" id="gcal-link" target="_blank" rel="noopener" href="#"><svg aria-hidden="true"><use href="#i-cal"/></svg>Google Calendar</a>
                 <button class="btn btn-white btn-sm" id="ical-btn" type="button"><svg aria-hidden="true"><use href="#i-download"/></svg>iCal (.ics)</button>
               </div>
@@ -1275,113 +1320,202 @@
               <p>Visit <a href="https://soleplayatl.com" target="_blank" rel="noopener">SolePlayAtl.com</a> &amp; <a href="https://ghostgaming.com" target="_blank" rel="noopener">Ghostgaming.com</a></p>
             </details>
           </article>
-
-          <article class="card activity-card">
-            <span class="tag peach">Activity 1</span>
-            <h3>2027 Incoming App Activation</h3>
-            <p>Application design activity for 8th grade to 12th grade students. Dates and details to be determined.</p>
-          </article>
         </div>
       </div>
     </section>
 
     <!-- =====================================================
-         MENTAL HEALTH
+         MENTAL HEALTH  (mirrors thesolecirclefoundation.org/mental-health)
+         Drawers are <details>: each opens/closes on its own, so several can be open at once.
          ===================================================== -->
     <section class="panel" id="mental-health" aria-labelledby="mh-title" tabindex="-1">
-      <div class="wrap">
-        <header class="panel-head">
-          <div>
-            <span class="eyebrow"><svg aria-hidden="true"><use href="#i-heart"/></svg>Mental Health</span>
-            <h2 id="mh-title">How to Find a Therapist</h2>
-            <p class="lede">A step-by-step guide for students and families.</p>
-          </div>
+      <div class="wrap mh-wrap">
+        <header class="page-head">
+          <h2 id="mh-title">Mental Health Resources</h2>
         </header>
 
-        <div class="two-col">
-          <div class="card">
-            <ol class="steps">
-              <li>
-                <h4>Contact Your Insurance Provider</h4>
-                <ul>
-                  <li>Request their mental health provider directory.</li>
-                  <li>Get at least 3-4 referrals (some may not be accepting new patients).</li>
-                  <li>Ask about copays and coverage details.</li>
-                </ul>
-              </li>
-              <li>
-                <h4>Ask Your Current Healthcare Provider</h4>
-                <ul>
-                  <li>They often know local therapists.</li>
-                  <li>Can provide direct referrals.</li>
-                  <li>May help coordinate care.</li>
-                </ul>
-              </li>
-              <li>
-                <h4>Get Personal Recommendations</h4>
-                <ul>
-                  <li>Ask trusted friends or family.</li>
-                  <li>Even if their therapist isn’t available, they might suggest colleagues.</li>
-                  <li>Request recommendations from other healthcare providers.</li>
-                </ul>
-              </li>
-              <li>
-                <h4>Help Navigating the Process</h4>
-                <ul>
-                  <li>Call the National Alliance on Mental Illness helpline at <a href="tel:18009506264">1-800-950-6264</a></li>
-                  <li>Call SAMHSA’s helpline at <a href="tel:18006624357">1-800-662-4357</a>.</li>
-                  <!-- TODO: replace href="#" with the real guide URL -->
-                  <li>Watch my <a href="#" class="todo-link" title="Link coming soon">step-by-step guide</a>.</li>
-                  <!-- TODO: replace href="#" with the real article URL -->
-                  <li>If you are struggling financially, consider talking to your therapist about it as outlined <a href="#" class="todo-link" title="Link coming soon">here</a>.</li>
-                </ul>
-              </li>
-            </ol>
+        <!-- Crisis info is always visible (never inside a drawer) -->
+        <div class="crisis-box" role="region" aria-labelledby="crisis-title">
+          <h3 id="crisis-title">If you are currently having a mental health crisis, find resources here</h3>
+          <div class="crisis-cols">
+            <div>
+              <h4>United States</h4>
+              <ul>
+                <li>Dial <a href="tel:988">988</a> for the Suicide &amp; Crisis Lifeline (24/7)</li>
+                <li>Text HOME to <a href="sms:741741">741741</a> to reach <a href="https://www.crisistextline.org/" target="_blank" rel="noopener">Crisis Text Line</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4>Outside the United States</h4>
+              <ul>
+                <li>Visit <a href="https://findahelpline.com/" target="_blank" rel="noopener">Find a Helpline</a></li>
+              </ul>
+            </div>
           </div>
+        </div>
 
-          <aside class="card help-card" aria-labelledby="help-title">
-            <h3 id="help-title">Need to talk to someone?</h3>
-            <ul class="help-list">
-              <li><svg aria-hidden="true"><use href="#i-phone"/></svg><span>NAMI HelpLine<br /><a href="tel:18009506264">1-800-950-6264</a></span></li>
-              <li><svg aria-hidden="true"><use href="#i-phone"/></svg><span>SAMHSA National Helpline<br /><a href="tel:18006624357">1-800-662-4357</a></span></li>
-            </ul>
-          </aside>
+        <div class="mh-tools">
+          <button class="text-link" type="button" id="mh-toggle-all" aria-controls="mh-drawers">Expand all</button>
+        </div>
+
+        <div class="mh-drawers" id="mh-drawers">
+          <details class="mh-drawer">
+            <summary>Mental Health Resources <svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+            <div class="mh-drawer-body">
+              <ul class="mh-list">
+                <li><strong>LGBTQ+ Support:</strong> Visit <a href="https://www.thetrevorproject.org/" target="_blank" rel="noopener">The Trevor Project</a></li>
+                <li><strong>Sexual Assault Support:</strong> Visit the <a href="https://rainn.org/resources" target="_blank" rel="noopener">National Sexual Assault Hotline</a></li>
+                <li><strong>Domestic Violence Support:</strong> Visit the <a href="https://www.thehotline.org/" target="_blank" rel="noopener">National Domestic Violence Hotline</a></li>
+                <li><strong>Automated Support:</strong> Visit <a href="https://r.kokocares.org/referral/" target="_blank" rel="noopener">Koko Crisis Support</a></li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="mh-drawer">
+            <summary>How to Find a Therapist <svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+            <div class="mh-drawer-body">
+              <ol class="steps">
+                <li>
+                  <h4>Contact Your Insurance Provider</h4>
+                  <ul>
+                    <li>Request their mental health provider directory.</li>
+                    <li>Get at least 3-4 referrals (some may not be accepting new patients).</li>
+                    <li>Ask about copays and coverage details.</li>
+                  </ul>
+                </li>
+                <li>
+                  <h4>Ask Your Current Healthcare Provider</h4>
+                  <ul>
+                    <li>They often know local therapists.</li>
+                    <li>Can provide direct referrals.</li>
+                    <li>May help coordinate care.</li>
+                  </ul>
+                </li>
+                <li>
+                  <h4>Get Personal Recommendations</h4>
+                  <ul>
+                    <li>Ask trusted friends or family.</li>
+                    <li>Even if their therapist isn’t available, they might suggest colleagues.</li>
+                    <li>Request recommendations from other healthcare providers.</li>
+                  </ul>
+                </li>
+                <li>
+                  <h4>Help Navigating the Process</h4>
+                  <ul>
+                    <li>Call the <a href="https://www.nami.org/nami-helpline/" target="_blank" rel="noopener">National Alliance on Mental Illness helpline</a> at <a href="tel:18009506264">1-800-950-6264</a></li>
+                    <li>Call <a href="https://www.samhsa.gov/find-help/helplines/national-helpline" target="_blank" rel="noopener">SAMHSA’s helpline</a> at <a href="tel:18006624357">1-800-662-4357</a></li>
+                    <li>Watch this <a href="https://www.youtube.com/watch?v=YX9t9w61-7w" target="_blank" rel="noopener">step-by-step guide</a></li>
+                    <li>If you are struggling financially, consider talking to your therapist about it as outlined <a href="https://www.nytimes.com/2024/09/15/business/affordable-therapy-costs.html" target="_blank" rel="noopener">here</a></li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+          </details>
+
+          <details class="mh-drawer">
+            <summary>Special Directories <svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+            <div class="mh-drawer-body mh-cols">
+              <div>
+                <h4>For Specific Therapeutic Approaches</h4>
+                <ul class="mh-list">
+                  <li><a href="https://www.findcbt.org/FAT/" target="_blank" rel="noopener">Cognitive Behavioral Therapists</a></li>
+                  <li><a href="https://findyourtherapist.adaa.org/" target="_blank" rel="noopener">Anxiety and Mood Experts</a></li>
+                </ul>
+              </div>
+              <div>
+                <h4>For Culturally Responsive Care</h4>
+                <ul class="mh-list">
+                  <li><a href="https://therapyforblackgirls.com/start-here/" target="_blank" rel="noopener">Therapy for Black Girls</a></li>
+                  <li><a href="https://therapyforblackmen.org/" target="_blank" rel="noopener">Therapy for Black Men</a></li>
+                  <li><a href="https://www.melaninandmentalhealth.com/" target="_blank" rel="noopener">Melanin and Mental Health</a></li>
+                  <li><a href="https://www.ayanatherapy.com/" target="_blank" rel="noopener">Ayana Therapy</a></li>
+                  <li><a href="https://southasiantherapists.org/" target="_blank" rel="noopener">South Asian Therapists</a></li>
+                  <li><a href="https://samhin.org/" target="_blank" rel="noopener">South Asian Mental Health Initiative</a></li>
+                </ul>
+              </div>
+              <div>
+                <h4>For LGBTQ+ Affirming Care</h4>
+                <ul class="mh-list">
+                  <li><a href="https://directory.gaylesta.org/find-a-therapist/" target="_blank" rel="noopener">Gaylesta</a></li>
+                </ul>
+              </div>
+              <div>
+                <h4>General Directories</h4>
+                <ul class="mh-list">
+                  <li><a href="https://www.psychologytoday.com/us/therapists" target="_blank" rel="noopener">Psychology Today</a></li>
+                </ul>
+              </div>
+            </div>
+          </details>
+
+          <details class="mh-drawer">
+            <summary>Student Resources <svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+            <div class="mh-drawer-body">
+              <ul class="mh-list">
+                <li>If you’re a college student, visit your counseling center. Often free or low-cost and on-campus.</li>
+                <li>If you’re in elementary, middle, or high school, talk to a teacher you trust. Tell them “I’m having a hard time, I’m not sure who to talk to about this, can you help me?”</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="mh-drawer">
+            <summary>Support Groups <svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+            <div class="mh-drawer-body">
+              <ul class="mh-list">
+                <li><a href="https://www.nami.org/Find-Your-Local-NAMI/Affiliate/Programs?classkey=a1x36000003TN9TAAW" target="_blank" rel="noopener">NAMI Support Groups</a>
+                  <ul><li>Free weekly meetings</li><li>Available nationwide in the United States</li></ul>
+                </li>
+                <li><a href="https://www.mhanational.org/find-support-groups" target="_blank" rel="noopener">Mental Health America Groups</a>
+                  <ul><li>Various specialized groups</li><li>Problem-specific support</li></ul>
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="mh-drawer">
+            <summary>Mental Health Education <svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+            <div class="mh-drawer-body">
+              <ul class="mh-list">
+                <li><a href="https://www.jedfoundation.org/mental-health-resource-center/" target="_blank" rel="noopener">JED Foundation Resource Center</a></li>
+                <li><a href="https://screening.mhanational.org/screening-tools" target="_blank" rel="noopener">Mental Health America Screening Tools</a></li>
+                <li><a href="https://seizetheawkward.org/" target="_blank" rel="noopener">How to start conversations about mental health</a></li>
+              </ul>
+            </div>
+          </details>
         </div>
       </div>
     </section>
 
     <!-- =====================================================
-         COMMUNITY HEALTH (also "Wellness and Community" in Our Work)
+         WELLNESS AND COMMUNITY  (Ecosystem card 2 → "Learn more"; also the "Community Health" nav link)
          ===================================================== -->
     <section class="panel" id="community-health" aria-labelledby="ch-title" tabindex="-1">
       <div class="wrap">
-        <header class="panel-head">
-          <div>
-            <span class="eyebrow"><svg aria-hidden="true"><use href="#i-users"/></svg>Community Health · Wellness and Community</span>
-            <h2 id="ch-title">Care for the whole student</h2>
-            <p class="lede">Community gatherings, meditation classes, and workshops.</p>
-          </div>
-          <ul class="chips" aria-label="Wellness focus areas">
-            <li>Mental Health Resources</li><li>Community Gatherings</li><li>Meditation Classes &amp; Workshops</li>
-          </ul>
+        <header class="page-head">
+          <h2 id="ch-title">Wellness and Community</h2>
         </header>
 
-        <div class="two-col">
-          <article class="card">
-            <div class="yoga-art" aria-hidden="true"><svg><use href="#i-lotus"/></svg></div>
-            <span class="tag peach">Program</span>
-            <h3>Yoga and Gatherings</h3>
-            <p>Yoga and Gatherings is a community-focused program designed to foster connection, wellness, and mindfulness through the practice of yoga. Participants of all skill levels come together to engage in guided sessions led by experienced instructors. Each gathering not only emphasizes physical postures and breathwork but also encourages social interaction and personal growth. The program aims to create a supportive environment where individuals can share experiences, establish friendships, and cultivate a sense of belonging, all while enhancing their physical and mental well-being through the art of yoga.</p>
-            <button class="btn btn-mint btn-sm" type="button" data-goto="contact">I’m interested</button>
+        <div class="program-list">
+          <article class="program-card">
+            <img src="images/yoga-outside.jpg" alt="Community members gathered outdoors with sound bowls after a yoga session" loading="lazy" style="object-position: 50% 40%" />
+            <div class="program-body">
+              <h3>Yoga and Gatherings</h3>
+              <p>Yoga and Gatherings is a community-focused program designed to foster connection, wellness, and mindfulness through the practice of yoga. Participants of all skill levels come together to engage in guided sessions led by experienced instructors. Each gathering not only emphasizes physical postures and breathwork but also encourages social interaction and personal growth. The program aims to create a supportive environment where individuals can share experiences, establish friendships, and cultivate a sense of belonging, all while enhancing their physical and mental well-being through the art of yoga.</p>
+              <button class="btn btn-blue" type="button" data-gallery="yoga-gatherings"><svg aria-hidden="true"><use href="#i-image"/></svg>View photo gallery</button>
+            </div>
           </article>
 
-          <aside class="card">
-            <span class="tag mint">Resource</span>
-            <h3>Looking for mental health support?</h3>
-            <p>Our step-by-step guide walks families through finding a therapist, plus helplines you can call today.</p>
-            <button class="text-link" type="button" data-goto="mental-health">How to find a therapist <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
-          </aside>
+          <article class="program-card">
+            <img src="https://images.pixieset.com/85163436/2678738cab646b2a067409a56c5283c0-cover.jpg" alt="Kicks + Cuts community event in Dothan, Alabama" loading="lazy" style="object-position: 50% 50%" />
+            <div class="program-body">
+              <h3>Kicks + Cuts</h3>
+              <p>For the past two years, we have sponsored Kicks + Cuts, an event that has provided more than 1,000 pairs of shoes and haircuts to the community of Dothan, Alabama.</p>
+              <button class="btn btn-blue" type="button" data-gallery="kicks-cuts"><svg aria-hidden="true"><use href="#i-image"/></svg>View photo gallery</button>
+            </div>
+          </article>
         </div>
+
+        <p class="page-note">Looking for mental health support? <button class="text-link" type="button" data-goto="mental-health">Mental health resources <svg aria-hidden="true"><use href="#i-arrow"/></svg></button></p>
       </div>
     </section>
 
@@ -1475,6 +1609,34 @@
     </section>
   </main>
 
+  <!-- ================= PHOTO GALLERY MODAL (filled by JS from GALLERIES) ================= -->
+  <dialog class="gallery-modal" id="gallery-modal" aria-labelledby="gm-title">
+    <div class="gm-head">
+      <div>
+        <h2 id="gm-title">Gallery</h2>
+        <span class="gm-count" id="gm-count"></span>
+      </div>
+      <button class="icon-btn" type="button" id="gm-close" aria-label="Close gallery"><svg aria-hidden="true"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="gm-body">
+      <div class="gm-grid" id="gm-grid"></div>
+      <div class="gm-viewer" id="gm-viewer" hidden>
+        <div class="gm-stage">
+          <img id="gm-img" alt="" />
+          <button class="gm-nav gm-prev" type="button" id="gm-prev" aria-label="Previous photo"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <button class="gm-nav gm-next" type="button" id="gm-next" aria-label="Next photo"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        </div>
+        <div class="gm-bar">
+          <button class="text-link" type="button" id="gm-back">← All photos</button>
+          <span class="gm-count" id="gm-pos"></span>
+        </div>
+      </div>
+    </div>
+    <div class="gm-foot" id="gm-foot" hidden>
+      <a class="text-link" id="gm-external" href="#" target="_blank" rel="noopener">See the full gallery <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+  </dialog>
+
   <!-- ================= FOOTER ================= -->
   <footer class="site-footer">
     <div class="footer-grid">
@@ -1562,7 +1724,7 @@
       endISO:     '2025-02-22T14:00:00-05:00'
     };
     // Off while Level Up is shown as "upcoming" for layout purposes. Turn on with real dates.
-    const SHOW_PAST_BADGE = false;
+    const SHOW_PAST_BADGE = true; // shows "Past event" and hides the calendar buttons once the event is over
 
     /* =========================================================
        PAGE ROUTING
@@ -1694,12 +1856,252 @@
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     });
 
-    if (SHOW_PAST_BADGE && Date.now() > Date.parse(EVENT.endISO)) document.getElementById('past-badge').hidden = false;
+    if (SHOW_PAST_BADGE && Date.now() > Date.parse(EVENT.endISO)) {
+      document.getElementById('past-badge').hidden = false;
+      document.getElementById('cal-links').hidden = true;
+    }
+
+    /* =========================================================
+       PHOTO GALLERIES (modal)
+       Each "View photo gallery" button has data-gallery="<id>" matching a key below.
+       Photos currently load from the OLD Squarespace site. Before that site is shut down,
+       run download-galleries.sh, commit images/galleries/, then set USE_LOCAL_GALLERIES = true.
+       ========================================================= */
+    const USE_LOCAL_GALLERIES = false;
+
+    const GALLERIES = {
+      'day-dream': {
+        title: 'Day Dream',
+        images: [
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/d377f96e-442a-484e-80cb-59f391b8548b/TNW04862.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/a5afe98a-be7f-47e1-8823-b2fdf71eeb30/TNW04864.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/d4f849e8-6948-4d78-9f04-0d9d4571696c/TNW04860.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/1f8db0f9-2ea2-4a65-adeb-370d3a38f988/TNW04859.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/24a39f59-0d2c-4810-ade4-f76eba96c773/TNW04857.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/2f733497-8f2e-4313-8613-38da96f147a5/TNW04871.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/8bab75f2-e622-4af1-b748-f395e25750ad/TNW04847.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/cedfb0ab-dc3b-40ee-b4ce-9e45a3c175b6/TNW04846.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/e902bada-fe17-45cf-8576-b6571fefe064/TNW04898.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/5907d1a7-a05b-408d-948e-0a8d994e9745/TNW04842.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/8bd17890-f812-48d5-82d6-fe45c6fdcfcd/TNW04919.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/0185a6d2-2b68-40e6-8a95-1cf7e54f10f4/IMG_8881.JPG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/b848ca8e-7b41-4256-8475-38c9e4c22f53/TNW04879.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/7c25bf31-563e-4adc-ae9d-9018735fdb14/TNW04901.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/20e4a0a6-70e3-4ed7-a158-933cb5b73fb2/TNW04912.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/c68ad8a9-40ab-4624-9bfc-6ace909527ec/TNW04882.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/327a8b83-8e81-42e8-ac38-c271e1501130/TNW04895.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/91397ec5-e3f5-4a5a-8077-85ad98712e49/TNW04885.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/bd341fbf-01a5-48a6-92ae-225bb5c2032e/TNW04890.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/4865b3ed-6cfe-4b3e-9a5a-bf93b3e174c5/TNW04876.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/8c9fb790-9d74-4714-916f-72f97a5a6669/TNW04893.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/9c01b3e3-4d0d-464b-9a43-b89fcfd76294/TNW04841.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/a0170e1a-33b0-4d46-b3b3-8e4add8475d0/IMG_6922.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/4bb94757-4ecd-4fd9-837c-9cff3fc4518d/P1055395.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/f44b484e-5ce4-4f4f-81c2-c3aa4a325022/P1055373.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/923aa1fd-f3ea-49d8-ba41-98802e25ae80/IMG_6923.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/3f3cf8f9-410e-42ce-b891-87b30b0b0365/P1055432.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/8e84714b-7ff3-4cdd-8ba9-458376d92421/P1055411.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/d61b6110-1554-4862-b28d-853f0fa3a9ad/P1055368.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/3c5a7223-cc66-4857-a1de-fff4500d02ec/IMG_6940.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/c5a57b8d-1b5c-4605-bcd1-ee7c093b0333/P1055356.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/e4684c0a-b268-46ef-8134-08ef6879d480/P1055348.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/bedd608c-ea7f-476f-a4b4-e4b224701207/P1055355.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/75e2f823-9d71-40a6-abb2-8286d428d113/P1055375.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/0ca187ed-b558-43ce-8b8c-3524a3e49e76/P1055383.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/bf23daad-cb41-4e99-8737-95fdacce6fd3/P1055369.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/dffa50d0-7205-4f12-a6cb-c0d7b22df08e/P1055364.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/d8d448d2-d081-43ed-9060-9a2beb2a5479/P1055352.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/7035cc9d-1fba-4a36-9518-608715b8150d/P1055416.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/f1544ed4-e19d-4939-88f6-11cf56343e86/P1055427.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/8bcc9881-2905-48bd-9eb1-1c6432fa8f4d/P1055387.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/3074111f-625f-466d-8e83-f6318138f52b/IMG_9507.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/c85e7425-8dc2-4f28-a6ce-971ab93ae45c/Screenshot+2023-08-06+at+4.49.23+PM.JPG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/43b2a280-0e70-4827-8d5f-824767a86d1f/Screenshot+2023-08-06+at+4.56.28+PM.JPG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/e6b8578a-6843-46c5-9271-d0d90d47d167/IMG_8349.JPG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/ef136910-c943-4c41-8129-16098525a009/IMG_5827.JPG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/9d38bc1e-e9c2-4561-a81e-9397c5ae2e5e/IMG_5831.JPG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/7dd1b41e-de19-4f45-8ad3-f7ccc122de8e/IMG_5828.JPG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/c3bfdc51-f366-42de-b1b8-dbe04200c4c4/Screenshot+2023-08-06+at+4.52.28+PM.JPG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/8c88983c-0faf-4557-8277-ae86d076ed7b/IMG_5833.JPG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/761ee024-cfb4-4169-ad51-99a04861f936/IMG_5830.JPG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/36bd49e9-d1d4-4415-96a6-a486b945b4ee/IMG_0270.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/3cee59bf-8b05-4e20-8010-0439b991fafe/IMG_9510.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/10d9d23e-e3ae-459f-b79a-1ca25f99e80a/IMG_5832.JPG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/80dee804-e757-4f45-912e-e152210fc56d/IMG_5834.JPG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/8ac539d6-49e3-4d60-814d-1450b65d6458/Screenshot+2023-08-06+at+4.47.14+PM.JPG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/c423272d-af48-4698-81db-96d8335d9dd8/IMG_5826.JPG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/f6a7ec6e-3e1c-42a1-917b-0b65c0d7836b/IMG_8433.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/3b038f2d-7fc7-416e-a945-35ee56aa877f/IMG_0264.JPG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/4a0d8d37-60db-417b-8c8c-757077d23202/IMG_5839.JPG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/05ea049a-d465-4808-b878-bea250be905c/IMG_5829.JPG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/249363bd-4f7f-49bc-ad02-e22cd49cac61/IMG_8509.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/906a7702-e21f-4554-a0a8-76f8e3a4ca9e/IMG_8511.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/4d2e76c9-becd-4b04-a73d-0b9d3e2f5fc2/IMG_8508.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/d2144fff-6333-429a-80af-dd7f6009c0ac/IMG_8516.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/3a5bed13-0e59-4c1d-88c3-2cd20cc3d5e8/Photo+Aug+12+2023%2C+11+51+55+AM.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/8c7d3df8-cf95-414c-97ec-66cc31905b01/IMG_8520.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/9a5901df-2ae2-4af7-9b51-35ab10e1b979/IMG_8513.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/9027bce9-5638-4b53-8b93-0fc827b335ff/IMG_8518.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/5d2ebd11-3fd2-41ef-a95c-59abc4f77a9b/IMG_8510.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/9eafa4b6-9e39-4c25-ae58-36404a2f6347/Photo+Aug+12+2023%2C+3+00+40+PM.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/284c947e-2d48-415c-bf6d-9c7093023949/Photo+Aug+12+2023%2C+11+51+48+AM.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/5241b1d9-0d15-404a-b1e8-9ad580e9da1c/IMG_5310.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/e62f499e-9909-4119-8aa9-bc98a217fd13/IMG_8515.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/fe7899f4-7884-4d32-8adf-37f776ca3e85/IMG_8507.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/2ccc86c0-113d-4734-9bfe-88ff03bc678c/IMG_8512.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/37168640-3abb-4304-8bb4-f50e681d894f/IMG_8517.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/0ce83f8a-baeb-4dd6-86a8-99e95d557791/IMG_5314.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/8c83ae3a-b5d5-441c-ba03-2a1db44bd426/IMG_8514.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/e9657517-3fc3-4a05-8db7-f18dd64d329b/IMG_5312.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/a79750fc-0628-495e-8338-ea1c3d93bd35/IMG_8519.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/64679eb9-4a91-4de0-baf6-4064330c533d/TNW04078.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/364a2dcb-a228-45ce-9f15-44f6dd1b55e3/TNW04061.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/1a65cb2f-2a3f-434e-ab1c-5f0bb18976df/TNW04029.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/8e560a20-cbb9-421f-a410-e5d1d5f44200/TNW04040.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/fbee1abc-b947-459e-9180-5f3afcff38e3/TNW04087.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/3e1c7217-3704-49fa-93a5-8930441fd605/TNW04069.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/26769ef1-822d-4de6-982b-73a54bef0d42/TNW04054.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/c29fc47e-d0ff-4194-838a-5ce26b5e5693/TNW04063.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/5ac7b258-ef08-4f88-86ae-7a7d23d7da1a/TNW04076.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/e6674fe1-9290-49a4-b8e6-aafab2ccfa9c/TNW04060.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/71250d7a-1586-44e1-a5ae-dc0866f4017d/TNW04041.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/916d2b73-49ab-40f2-af12-e3df4e237088/TNW04082.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/2822eb67-b9ca-4ed8-bcd0-18b1dced198d/TNW04020.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/a2a151a6-8c2a-440f-8539-90b4593f34c9/TNW04072.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/b54b50d1-c370-4639-8b83-6782e34237d4/TNW04013.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/a3085eb5-cc00-43e1-906a-cfe7aa3511af/TNW04015.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/d6ecc4d2-72b5-4a5e-9641-109e92608091/TNW04062.jpg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/8b72e35e-b24b-4085-8f7e-80362b408a2a/TNW04073.jpg'
+        ]
+      },
+      'yoga-gatherings': {
+        title: 'Yoga and Gatherings',
+        images: [
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/530becd8-53d8-4f91-88fc-545a2e8490c9/_MG_0059.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/66b8120e-91c6-4196-8992-52df9683d769/IMG_7256.JPEG',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/acb0ea5f-afef-4784-843e-1b469a5f9d8d/SolePlayHerYoga.jpeg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/1db65a76-14a1-4b21-b872-1758de2432d0/9897C23E-F782-482C-9CE1-239E85E26462.jpeg',
+          'https://images.squarespace-cdn.com/content/v1/661eaf3c95b22b2975d03687/78548142-07a1-460f-82c2-48be11ed4c40/IMG_8099.jpeg'
+        ]
+      },
+      'kicks-cuts': {
+        title: 'Kicks + Cuts',
+        // The full Kicks + Cuts gallery lives on the photographer's site and can't be pulled in here.
+        // Add photo paths to this list (e.g. 'images/galleries/kicks-cuts/photo-1.jpg') to show them in the modal.
+        images: [
+          'https://images.pixieset.com/85163436/2678738cab646b2a067409a56c5283c0-cover.jpg'
+        ],
+        externalUrl: 'https://gallery.airocreative.com/kickscutsevent/',
+        externalLabel: 'See the full gallery on AIRÓ Creative'
+      }
+    };
+
+    // Turns a Squarespace URL into the local file name download-galleries.sh saves it as
+    function galleryFileName(url) {
+      const last = decodeURIComponent(url.split('/').pop().replace(/\+/g, ' '));
+      return last.toLowerCase().replace(/[^a-z0-9.]+/g, '-').replace(/^-+|-+$/g, '');
+    }
+    function gallerySrc(id, url, width) {
+      const isSquarespace = url.includes('images.squarespace-cdn.com');
+      if (USE_LOCAL_GALLERIES && isSquarespace) return `images/galleries/${id}/${galleryFileName(url)}`;
+      return isSquarespace ? `${url}?format=${width}w` : url;
+    }
+
+    const gm = {
+      dialog: document.getElementById('gallery-modal'),
+      title: document.getElementById('gm-title'),
+      count: document.getElementById('gm-count'),
+      grid: document.getElementById('gm-grid'),
+      viewer: document.getElementById('gm-viewer'),
+      img: document.getElementById('gm-img'),
+      pos: document.getElementById('gm-pos'),
+      prev: document.getElementById('gm-prev'),
+      next: document.getElementById('gm-next'),
+      back: document.getElementById('gm-back'),
+      foot: document.getElementById('gm-foot'),
+      external: document.getElementById('gm-external'),
+      id: null, index: 0, opener: null
+    };
+
+    function openGallery(id, opener) {
+      const g = GALLERIES[id];
+      if (!g) return;
+      gm.id = id; gm.opener = opener || null;
+      gm.title.textContent = g.title;
+      gm.count.textContent = g.images.length > 1 ? `${g.images.length} photos` : '';
+      gm.grid.innerHTML = '';
+      g.images.forEach((url, i) => {
+        const b = document.createElement('button');
+        b.type = 'button'; b.className = 'gm-thumb';
+        b.setAttribute('aria-label', `Open photo ${i + 1} of ${g.images.length}`);
+        const im = document.createElement('img');
+        im.src = gallerySrc(id, url, 500); im.alt = ''; im.loading = 'lazy'; im.decoding = 'async';
+        b.appendChild(im);
+        b.addEventListener('click', () => { showPhoto(i); gm.next.focus(); }); // keep keyboard focus inside the modal
+        gm.grid.appendChild(b);
+      });
+      gm.foot.hidden = !g.externalUrl;
+      if (g.externalUrl) {
+        gm.external.href = g.externalUrl;
+        gm.external.firstChild.textContent = (g.externalLabel || 'See the full gallery') + ' ';
+      }
+      const single = g.images.length === 1;
+      gm.prev.hidden = gm.next.hidden = gm.back.hidden = single;
+      if (single) showPhoto(0); else showGrid();
+      document.body.classList.add('modal-open');
+      gm.dialog.showModal();
+      gm.dialog.querySelector('#gm-close').focus();
+    }
+    function showGrid() {
+      gm.viewer.hidden = true; gm.grid.hidden = false;
+      gm.img.removeAttribute('src');
+    }
+    function showPhoto(i) {
+      const g = GALLERIES[gm.id];
+      gm.index = (i + g.images.length) % g.images.length;
+      gm.img.src = gallerySrc(gm.id, g.images[gm.index], 1500);
+      gm.img.alt = `${g.title} photo ${gm.index + 1} of ${g.images.length}`;
+      gm.pos.textContent = g.images.length > 1 ? `${gm.index + 1} / ${g.images.length}` : '';
+      gm.grid.hidden = true; gm.viewer.hidden = false;
+    }
+    gm.prev.addEventListener('click', () => showPhoto(gm.index - 1));
+    gm.next.addEventListener('click', () => showPhoto(gm.index + 1));
+    gm.back.addEventListener('click', () => { const i = gm.index; showGrid(); gm.grid.children[i]?.focus(); });
+    document.getElementById('gm-close').addEventListener('click', () => gm.dialog.close());
+    gm.dialog.addEventListener('click', e => { if (e.target === gm.dialog) gm.dialog.close(); }); // click on the dark backdrop
+    gm.dialog.addEventListener('close', () => {
+      document.body.classList.remove('modal-open');
+      showGrid();
+      if (gm.opener) gm.opener.focus();
+    });
+    document.addEventListener('keydown', e => {
+      if (!gm.dialog.open || gm.viewer.hidden) return;
+      if (e.key === 'ArrowLeft') { e.preventDefault(); showPhoto(gm.index - 1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); showPhoto(gm.index + 1); }
+    });
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('[data-gallery]');
+      if (btn) openGallery(btn.dataset.gallery, btn);
+    });
+
+    /* =========================================================
+       MENTAL HEALTH — "Expand all / Collapse all" for the drawers
+       ========================================================= */
+    const mhToggle = document.getElementById('mh-toggle-all');
+    const mhDrawers = Array.from(document.querySelectorAll('.mh-drawer'));
+    function syncMhToggle() { mhToggle.textContent = mhDrawers.every(d => d.open) ? 'Collapse all' : 'Expand all'; }
+    mhToggle.addEventListener('click', () => {
+      const openAll = !mhDrawers.every(d => d.open);
+      mhDrawers.forEach(d => d.open = openAll);
+      syncMhToggle();
+    });
+    mhDrawers.forEach(d => d.addEventListener('toggle', syncMhToggle));
 
     /* =========================================================
        FORMS — validation + submit (demo mode if no endpoint)
        ========================================================= */
     function handleForm(form, successMsg) {
+      if (!form) return; // form isn't on the page (e.g. removed) — skip it
       const status = form.querySelector('.form-status');
       form.addEventListener('submit', async e => {
         e.preventDefault();
