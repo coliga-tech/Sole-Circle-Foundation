@@ -499,6 +499,34 @@
     .subscribe-card p { color: var(--muted); }
     .subscribe-row { display: grid; gap: 10px; }
 
+    /* Subscribe card stacked above Connect with Us */
+    .connect-stack { display: grid; gap: 28px; }
+    .connect-socials h2 { margin-bottom: 0; }
+
+    /* Giving Tuesday carousel — identical square frames, slow continuous scroll.
+       Change --gt-speed (longer = slower) or --gt-size (frame size). */
+    .gt-carousel { min-width: 0; }
+    .gt-carousel h2 { color: var(--blue-deep); font-size: clamp(1.6rem, 4vw, 2.2rem); }
+    .gt-viewport {
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+              mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    }
+    .gt-track { --gt-speed: 45s; display: flex; width: max-content; animation: gt-scroll var(--gt-speed) linear infinite; }
+    .gt-carousel:hover .gt-track, .gt-carousel:focus-within .gt-track { animation-play-state: paused; }
+    @keyframes gt-scroll { to { transform: translateX(-50%); } }
+    .gt-set { display: flex; gap: 16px; margin: 0; padding: 0 16px 0 0; list-style: none; }
+    .gt-item { --gt-size: 220px; position: relative; flex: none; width: var(--gt-size); aspect-ratio: 1 / 1; overflow: hidden; background: #222222; }
+    .gt-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
+    .gt-link { position: relative; display: block; width: 100%; height: 100%; }
+    .gt-link::after { content: ""; position: absolute; inset: 0; background: rgba(20, 38, 61, 0); transition: background .25s ease; }
+    .gt-link:hover img, .gt-link:focus-visible img { transform: scale(1.05); }
+    .gt-link:hover::after, .gt-link:focus-visible::after { background: rgba(20, 38, 61, .35); }
+    .gt-badge { position: absolute; top: 8px; right: 8px; z-index: 1; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: rgba(20, 38, 61, .75); color: #fff; }
+    .gt-badge svg { width: 18px; height: 18px; }
+    @media (min-width: 900px) { .gt-item { --gt-size: 240px; } }
+    @media (prefers-reduced-motion: reduce) { .gt-viewport { overflow-x: auto; -webkit-mask-image: none; mask-image: none; } }
+
     /* Instagram divider: line — icon — line, sits above the photo tiles */
     .ig-divider { display: flex; align-items: center; gap: 20px; margin: 48px 0 24px; text-decoration: none; }
     .ig-divider::before, .ig-divider::after { content: ""; flex: 1; height: 3px; border-radius: 3px; background: var(--blue-deep); }
@@ -1151,25 +1179,61 @@
       <section class="band band-connect" id="connect" aria-labelledby="connect-title">
         <div class="band-inner">
           <div class="connect-grid">
-            <div>
-              <h2 id="connect-title">Connect with Us</h2>
-              <ul class="socials">
-                <li><a class="social-link" href="https://www.instagram.com/solecirclefndtn/" target="_blank" rel="noopener" aria-label="The Sole Circle Foundation on Instagram (opens in new tab)"><svg aria-hidden="true"><use href="#i-instagram"/></svg></a></li>
-                <li><a class="social-link" href="https://www.linkedin.com/company/the-sole-circle-foundation/" target="_blank" rel="noopener" aria-label="The Sole Circle Foundation on LinkedIn (opens in new tab)"><svg aria-hidden="true"><use href="#i-linkedin"/></svg></a></li>
-              </ul>
+            <!-- GIVING TUESDAY CAROUSEL — identical square frames that slide on their own and pause on hover/focus.
+                 Instagram tiles (with the badge) open the post; plain photos aren't links. Add or remove <li> items freely. -->
+            <div class="gt-carousel" role="region" aria-labelledby="gt-title">
+              <h2 id="gt-title">Giving Tuesday</h2>
+              <div class="gt-viewport">
+                <div class="gt-track">
+                  <ul class="gt-set">
+                    <li class="gt-item">
+                      <a class="gt-link" href="https://www.instagram.com/reel/DDIsvZdA8B5/" target="_blank" rel="noopener" aria-label="Watch this Giving Tuesday reel on Instagram (opens in new tab)">
+                        <img src="images/gt-1-panel-discussion.jpg" alt="Panel discussion on stage at a community foundation event" loading="lazy" style="object-position: 50% 55%" />
+                        <span class="gt-badge" aria-hidden="true"><svg><use href="#i-instagram"/></svg></span>
+                      </a>
+                    </li>
+                    <li class="gt-item">
+                      <img src="images/gt-2-four-ways.jpg" alt="4 ways to participate in our Giving Tuesday campaign: visit our website, donate to our non-profit, share our posts on social media, and tell someone about us" loading="lazy" />
+                    </li>
+                    <li class="gt-item">
+                      <img src="images/gt-3-countdown.jpg" alt="One day until Giving Tuesday. Spread the word!" loading="lazy" />
+                    </li>
+                    <li class="gt-item">
+                      <img src="images/gt-4-mission.jpg" alt="The Sole Circle Foundation is a non-profit organization with a mission to bridge the digital divide through technology, design, and wellness for underserved youth." loading="lazy" />
+                    </li>
+                    <li class="gt-item">
+                      <a class="gt-link" href="https://www.instagram.com/reel/DCKhLVyPzbr/" target="_blank" rel="noopener" aria-label="Watch this Giving Tuesday reel on Instagram (opens in new tab)">
+                        <img src="images/gt-5-yoga-collage.jpg" alt="Participants stretching during a wellness session at Sole Play" loading="lazy" style="object-position: 50% 50%" />
+                        <span class="gt-badge" aria-hidden="true"><svg><use href="#i-instagram"/></svg></span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
 
-            <div class="subscribe-card">
-              <h3>Subscribe</h3>
-              <p>Sign up with your email address to receive news and updates.</p>
-              <form id="subscribe-form" novalidate>
-                <div class="subscribe-row">
-                  <label class="sr-only" for="s-email">Email address</label>
-                  <input type="email" id="s-email" name="email" placeholder="Email address" autocomplete="email" required />
-                  <button class="btn btn-blue" type="submit">Subscribe</button>
-                </div>
-                <p class="form-status" role="status" aria-live="polite"></p>
-              </form>
+            <!-- SUBSCRIBE stacked above CONNECT WITH US -->
+            <div class="connect-stack">
+              <div class="subscribe-card">
+                <h3>Subscribe</h3>
+                <p>Sign up with your email address to receive news and updates.</p>
+                <form id="subscribe-form" novalidate>
+                  <div class="subscribe-row">
+                    <label class="sr-only" for="s-email">Email address</label>
+                    <input type="email" id="s-email" name="email" placeholder="Email address" autocomplete="email" required />
+                    <button class="btn btn-blue" type="submit">Subscribe</button>
+                  </div>
+                  <p class="form-status" role="status" aria-live="polite"></p>
+                </form>
+              </div>
+
+              <div class="connect-socials">
+                <h2 id="connect-title">Connect with Us</h2>
+                <ul class="socials">
+                  <li><a class="social-link" href="https://www.instagram.com/solecirclefndtn/" target="_blank" rel="noopener" aria-label="The Sole Circle Foundation on Instagram (opens in new tab)"><svg aria-hidden="true"><use href="#i-instagram"/></svg></a></li>
+                  <li><a class="social-link" href="https://www.linkedin.com/company/the-sole-circle-foundation/" target="_blank" rel="noopener" aria-label="The Sole Circle Foundation on LinkedIn (opens in new tab)"><svg aria-hidden="true"><use href="#i-linkedin"/></svg></a></li>
+                </ul>
+              </div>
             </div>
           </div>
 
@@ -1497,20 +1561,20 @@
 
         <div class="program-list">
           <article class="program-card">
-            <img src="images/yoga-outside.jpg" alt="Community members gathered outdoors with sound bowls after a yoga session" loading="lazy" style="object-position: 50% 40%" />
-            <div class="program-body">
-              <h3>Yoga and Gatherings</h3>
-              <p>Yoga and Gatherings is a community-focused program designed to foster connection, wellness, and mindfulness through the practice of yoga. Participants of all skill levels come together to engage in guided sessions led by experienced instructors. Each gathering not only emphasizes physical postures and breathwork but also encourages social interaction and personal growth. The program aims to create a supportive environment where individuals can share experiences, establish friendships, and cultivate a sense of belonging, all while enhancing their physical and mental well-being through the art of yoga.</p>
-              <button class="btn btn-blue" type="button" data-gallery="yoga-gatherings"><svg aria-hidden="true"><use href="#i-image"/></svg>View photo gallery</button>
-            </div>
-          </article>
-
-          <article class="program-card">
             <img src="https://images.pixieset.com/85163436/2678738cab646b2a067409a56c5283c0-cover.jpg" alt="Kicks + Cuts community event in Dothan, Alabama" loading="lazy" style="object-position: 50% 50%" />
             <div class="program-body">
               <h3>Kicks + Cuts</h3>
               <p>For the past two years, we have sponsored Kicks + Cuts, an event that has provided more than 1,000 pairs of shoes and haircuts to the community of Dothan, Alabama.</p>
               <button class="btn btn-blue" type="button" data-gallery="kicks-cuts"><svg aria-hidden="true"><use href="#i-image"/></svg>View photo gallery</button>
+            </div>
+          </article>
+
+          <article class="program-card">
+            <img src="images/yoga-outside.jpg" alt="Community members gathered outdoors with sound bowls after a yoga session" loading="lazy" style="object-position: 50% 40%" />
+            <div class="program-body">
+              <h3>Yoga and Gatherings</h3>
+              <p>Yoga and Gatherings is a community-focused program designed to foster connection, wellness, and mindfulness through the practice of yoga. Participants of all skill levels come together to engage in guided sessions led by experienced instructors. Each gathering not only emphasizes physical postures and breathwork but also encourages social interaction and personal growth. The program aims to create a supportive environment where individuals can share experiences, establish friendships, and cultivate a sense of belonging, all while enhancing their physical and mental well-being through the art of yoga.</p>
+              <button class="btn btn-blue" type="button" data-gallery="yoga-gatherings"><svg aria-hidden="true"><use href="#i-image"/></svg>View photo gallery</button>
             </div>
           </article>
         </div>
@@ -1860,6 +1924,20 @@
       document.getElementById('past-badge').hidden = false;
       document.getElementById('cal-links').hidden = true;
     }
+
+
+    /* =========================================================
+       GIVING TUESDAY CAROUSEL — copy the photo set once so the scroll loops seamlessly
+       (skipped for visitors who've turned on "reduce motion"; they get a swipeable row)
+       ========================================================= */
+    (function () {
+      const set = document.querySelector('.gt-set');
+      if (!set || reduceMotion) return;
+      const copy = set.cloneNode(true);
+      copy.setAttribute('aria-hidden', 'true');
+      copy.querySelectorAll('a').forEach(a => { a.tabIndex = -1; });
+      set.parentNode.appendChild(copy);
+    })();
 
     /* =========================================================
        PHOTO GALLERIES (modal)
