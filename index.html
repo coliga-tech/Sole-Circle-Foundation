@@ -400,6 +400,10 @@
     .dropoff svg { color: #FF8A6B; }
     .flyer-dates { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; color: var(--mint-deep); margin-bottom: 8px; }
     .flyer-dates svg { width: 18px; height: 18px; }
+    /* Sneaker drive on/off switch (see data-drive on #sneaker-drive) */
+    [data-drive="closed"] .drive-open, [data-drive="open"] .drive-closed { display: none !important; }
+    .drive-status { display: inline-flex; align-items: center; gap: 8px; margin: 4px 0 8px; font-weight: 800; color: var(--mint); }
+    .drive-status svg { width: 18px; height: 18px; flex: none; }
 
     /* ---- 3. Mission + founders (black) ---- */
     .band-mission { background: var(--band-mission); color: #fff; padding-top: 64px; padding-bottom: 72px; border-top: 1px solid rgba(255,255,255,.08); }
@@ -1177,37 +1181,57 @@
         </div>
       </section>
 
-      <!-- 4. SNEAKER DONATION DRIVE — flyer as a blurred full-bleed background, with the
-           flyer itself shown in front (picture-in-picture). Background is set from the <img> in JS. -->
-      <section class="band band-flyer" id="sneaker-drive" aria-labelledby="drive-title">
+      <!-- 4. SNEAKER DONATION DRIVE
+      ON/OFF SWITCH: change data-drive="closed" to data-drive="open" when a new drive launches.
+      • "closed" shows everything marked drive-closed (the not-accepting message + flyer).
+      • "open"   shows everything marked drive-open (dates, drop-off spots, download button + flyer).
+      Before opening a new drive, update the drive-open dates, locations, and flyer below.
+      The blurred background and Download button use whichever flyer is showing (set in JS). -->
+      <section class="band band-flyer" id="sneaker-drive" data-drive="closed" aria-labelledby="drive-title">
         <div class="band-inner flyer-grid">
-          <div class="flyer-frame">            
-            <img id="flyer-img" src="images/Sneaker Dono.jpg" width="820" height="1027" loading="lazy"
-                 alt="Sneaker Donation Drive flyer from The Sole Circle Foundation and Sole Play. Drop off boxes will be located at Sole Play Decatur and Lawrenceville from November 1st until Thanksgiving. Shoes will go to at-risk youth from the Promise Center." />
+          <div class="flyer-frame">
+            <img class="drive-open" data-flyer src="images/Sneaker Dono.jpg" width="820" height="1027" loading="lazy"
+                 alt="Sneaker Donation Drive flyer from The Sole Circle Foundation and Sole Play with drop-off locations and dates." />
+            <img class="drive-closed" data-flyer src="images/sneaker-donation-closed.jpg" width="1028" height="1288" loading="lazy"
+                 alt="Sneaker Donation Drive flyer: We are not currently accepting donations. Stay connected for future collection dates and announcements." />
           </div>
 
           <div class="flyer-copy">
             <span class="eyebrow"><svg aria-hidden="true"><use href="#i-shoe"/></svg>Give back</span>
             <h2 id="drive-title">Sneaker Donation Drive</h2>
-            <p class="flyer-dates"><svg aria-hidden="true"><use href="#i-cal"/></svg>November 1st – Thanksgiving</p>
-            <p class="lede">In partnership with Sole Play, drop off boxes will be located at both stores. Every pair goes to at-risk youth from the Promise Center.</p>
 
-            <div class="dropoffs">
-              <a class="dropoff" target="_blank" rel="noopener"
-                 href="https://www.google.com/maps/search/?api=1&amp;query=106+E+Ponce+de+Leon+Ave%2C+Decatur%2C+GA+30030">
-                <svg aria-hidden="true"><use href="#i-pin"/></svg>
-                <span><strong>Sole Play Decatur</strong>106 E Ponce de Leon Ave, Suite B Decatur, GA 30030</span>
-              </a>
-              <a class="dropoff" target="_blank" rel="noopener"
-                 href="https://www.google.com/maps/search/?api=1&amp;query=1956+Duluth+Hwy+%23108B%2C+Lawrenceville%2C+GA">
-                <svg aria-hidden="true"><use href="#i-pin"/></svg>
-                <span><strong>Sole Play Lawrenceville</strong>1956 Duluth Hwy #108B, Lawrenceville, GA</span>
-              </a>
+            <!-- Always shown -->
+            <p class="lede">The Sole Circle Foundation’s Sneaker Donation Drive supports opportunities to place gently used footwear back into the community.</p>
+
+            <!-- CLOSED -->
+            <div class="drive-closed">
+              <p class="drive-status"><svg aria-hidden="true"><use href="#i-cal"/></svg>We are not currently accepting donations.</p>
+              <p class="lede">Please stay connected for future collection dates and announcements.</p>
+              <div class="hero-cta">
+                <button class="btn btn-mint" type="button" data-goto="home" data-section="connect">Get updates</button>
+                <button class="btn btn-outline-light" type="button" data-goto="contact">Questions? Contact us</button>
+              </div>
             </div>
 
-            <div class="hero-cta">
-              <a class="btn btn-mint" href="#" data-flyer-link download="sole-circle-sneaker-donation-drive.jpg"><svg aria-hidden="true"><use href="#i-download"/></svg>Download flyer</a>
-              <button class="btn btn-outline-light" type="button" data-goto="contact">Questions? Contact us</button>
+            <!-- OPEN — update dates, locations, and flyer before switching on -->
+            <div class="drive-open">
+              <p class="flyer-dates"><svg aria-hidden="true"><use href="#i-cal"/></svg>[Start date] – [End date]</p>
+              <div class="dropoffs">
+                <a class="dropoff" target="_blank" rel="noopener"
+                   href="https://www.google.com/maps/search/?api=1&amp;query=106+E+Ponce+de+Leon+Ave%2C+Decatur%2C+GA+30030">
+                  <svg aria-hidden="true"><use href="#i-pin"/></svg>
+                  <span><strong>Sole Play Decatur</strong>106 E Ponce de Leon Ave, Suite B Decatur, GA 30030</span>
+                </a>
+                <a class="dropoff" target="_blank" rel="noopener"
+                   href="https://www.google.com/maps/search/?api=1&amp;query=1956+Duluth+Hwy+%23108B%2C+Lawrenceville%2C+GA">
+                  <svg aria-hidden="true"><use href="#i-pin"/></svg>
+                  <span><strong>Sole Play Lawrenceville</strong>1956 Duluth Hwy #108B, Lawrenceville, GA</span>
+                </a>
+              </div>
+              <div class="hero-cta">
+                <a class="btn btn-mint" href="#" data-flyer-link download="sole-circle-sneaker-donation-drive.jpg"><svg aria-hidden="true"><use href="#i-download"/></svg>Download flyer</a>
+                <button class="btn btn-outline-light" type="button" data-goto="contact">Questions? Contact us</button>
+              </div>
             </div>
           </div>
         </div>
@@ -2344,11 +2368,12 @@
     handleForm(document.getElementById('subscribe-form'), 'You’re subscribed! Watch your inbox for news and updates.');
     handleForm(document.getElementById('mailing-form'), 'You’re on the list. Thank you!');
 
-    // Flyer is embedded once (in the <img>); links reuse it so the file isn't tripled in size
-    const flyerSrc = document.getElementById('flyer-img').src;
+    // Sneaker drive: use whichever flyer matches data-drive ("open" or "closed") for the background + download link
+    const drive = document.getElementById('sneaker-drive');
+    const flyerImg = drive.querySelector(drive.dataset.drive === 'open' ? 'img.drive-open' : 'img.drive-closed');
+    const flyerSrc = flyerImg.src;
     document.querySelectorAll('[data-flyer-link]').forEach(a => a.href = flyerSrc);
-    document.getElementById('sneaker-drive').style.setProperty('--flyer-bg', `url("${flyerSrc}")`);
-
+    drive.style.setProperty('--flyer-bg', `url("${flyerSrc}")`);
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
