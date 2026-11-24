@@ -10,8 +10,7 @@
   <!-- Only external dependency: two Google Fonts (Lexend headings, Plus Jakarta Sans body). Icons are inline SVG. -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet" />
   <style>
     /* =========================================================
        DESIGN TOKENS
@@ -407,11 +406,11 @@
 
     /* ---- 3. Mission + founders (black) ---- */
     .band-mission { background: var(--band-mission); color: #fff; padding-top: 64px; padding-bottom: 72px; border-top: 1px solid rgba(255,255,255,.08); }
-    .mission-statement { text-align: center; max-width: 900px; margin: 0 auto 36px; }
+    .mission-statement { text-align: center; max-width: 720px; margin: 0 auto 40px; }
     .mission-statement .eyebrow { color: var(--mint); }
     .mission-statement p {
-      font: 600 clamp(1.35rem, 3.6vw, 2.1rem)/1.3 var(--font-display);
-      color: #fff; letter-spacing: -.01em; margin: 0;
+      font: italic 400 clamp(1rem, 1.5vw, 1.15rem)/1.7 var(--font-body);
+      color: rgba(255,255,255,.8); letter-spacing: .005em; margin: 0;
     }
     .videos-grid { display: grid; gap: 22px; max-width: 1100px; margin: 0 auto; }
     .video-card { margin: 0; }
