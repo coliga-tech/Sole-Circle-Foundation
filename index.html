@@ -1319,10 +1319,6 @@
           <div class="ig-carousel" data-ig-carousel aria-roledescription="carousel" aria-label="Recent Instagram posts">
             <div class="ig-viewport">
               <div class="ig-track">
-                <a class="ig-tile" href="https://www.instagram.com/p/DTiVWJXDvvy/" target="_blank" rel="noopener" aria-label="View our MLK Natatorium post on Instagram (opens in new tab)">
-                  <img src="images/mlk-natatorium.jpg" alt="Sole Circle Foundation leader with community and city leaders at an event" loading="lazy" style="object-position: 50% 50%" />
-                  <svg aria-hidden="true"><use href="#i-instagram"/></svg>
-                </a>
                 <a class="ig-tile" href="https://www.instagram.com/p/Daxz-lmOpBz/" target="_blank" rel="noopener" aria-label="View our Sole Play Gaming post on Instagram (opens in new tab)">
                   <img src="images/soleplay-gaming.jpg" alt="The Sole Circle Foundation logo over pink and white flowers" loading="lazy" style="object-position: 50% 45%" />
                   <svg aria-hidden="true"><use href="#i-instagram"/></svg>
@@ -1337,6 +1333,10 @@
                 </a>
                 <a class="ig-tile" href="https://www.instagram.com/p/CwYYkX9JcGH/" target="_blank" rel="noopener" aria-label="View our Day Dream custom cleats post on Instagram (opens in new tab)">
                   <img src="images/day-dream-sneaker.jpg" alt="Hands holding a hand-painted Nike cleat with a Day Dream tag" loading="lazy" style="object-position: 50% 50%" />
+                  <svg aria-hidden="true"><use href="#i-instagram"/></svg>
+                </a>
+                <a class="ig-tile" href="https://www.instagram.com/p/DTiVWJXDvvy/" target="_blank" rel="noopener" aria-label="View our MLK Natatorium post on Instagram (opens in new tab)">
+                  <img src="images/mlk-natatorium.jpg" alt="Sole Circle Foundation leader with community and city leaders at an event" loading="lazy" style="object-position: 50% 50%" />
                   <svg aria-hidden="true"><use href="#i-instagram"/></svg>
                 </a>
               </div>
@@ -1993,7 +1993,21 @@
 
     // Back/forward + deep links
     window.addEventListener('popstate', () => showPanel(location.hash.slice(1), { updateHash: false }));
+    // Refresh keeps your place: save scroll position when leaving, restore it on reload (same tab only).
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
     showPanel(location.hash.slice(1) || 'home', { updateHash: false });
+    const scrollKey = () => 'scf-scroll:' + location.pathname + location.hash;
+    try {
+      const saved = sessionStorage.getItem(scrollKey());
+      if (saved !== null) {
+        const restore = () => window.scrollTo({ top: +saved, behavior: 'instant' });
+        requestAnimationFrame(restore);
+        window.addEventListener('load', restore, { once: true }); // again after images finish loading
+      }
+    } catch (e) {}
+    window.addEventListener('pagehide', () => {
+      try { sessionStorage.setItem(scrollKey(), String(Math.round(window.scrollY))); } catch (e) {}
+    });
 
     /* =========================================================
        RIGHT-SIDE DRAWER
