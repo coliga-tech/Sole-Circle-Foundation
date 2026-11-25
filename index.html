@@ -540,12 +540,29 @@
     .ig-divider-icon svg { width: 32px; height: 32px; }
     .ig-divider:hover .ig-divider-icon, .ig-divider:focus-visible .ig-divider-icon { background: var(--mint-deep); transform: scale(1.06); }
 
-    .ig-grid { display: grid; gap: 20px; align-items: start; }
-    /* Phones: swipeable row instead of four stacked tiles */
-    @media (max-width: 599px) {
-      .ig-grid { grid-auto-flow: column; grid-auto-columns: 84%; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 12px; margin-right: -16px; padding-right: 16px; }
-      .ig-grid > * { scroll-snap-align: start; }
+    /* Instagram carousel: stop-and-go — slides one post, pauses, repeats (JS at bottom).
+       Posts visible at once: --ig-per (1.15 phones = next post peeks in, 2 tablets, 4 desktop).
+       Pause length: IG_PAUSE in the script. */
+    .ig-carousel { position: relative; }
+    .ig-viewport { overflow: hidden; }
+    .ig-track {
+      --ig-per: 1.15; --ig-gap: 20px;
+      display: flex; gap: var(--ig-gap);
+      transition: transform .7s cubic-bezier(.65, 0, .35, 1);
     }
+    .ig-track > .ig-tile { flex: 0 0 calc((100% - (var(--ig-per) - 1) * var(--ig-gap)) / var(--ig-per)); }
+    @media (min-width: 600px) { .ig-track { --ig-per: 2; } }
+    @media (min-width: 1100px) { .ig-track { --ig-per: 4; } }
+    .ig-controls { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; }
+    .ig-arrow {
+      display: grid; place-items: center; width: 44px; height: 44px; padding: 0;
+      border-radius: 50%; border: 2px solid var(--blue-deep);
+      background: transparent; color: var(--blue-deep); cursor: pointer;
+      transition: background .2s ease, color .2s ease;
+    }
+    .ig-arrow svg { width: 20px; height: 20px; }
+    .ig-arrow[data-ig-prev] svg { transform: rotate(180deg); }
+    .ig-arrow:hover, .ig-arrow:focus-visible { background: var(--blue-deep); color: #fff; }
     /* Instagram tiles: identical rectangles, square corners, photo only.
        Change --tile-ratio to 4 / 5 for tall rectangles. Nudge a crop with object-position on its <img>. */
     .ig-tile {
@@ -882,7 +899,6 @@
       .checks { grid-template-columns: 1fr 1fr; }
       .events-grid { grid-template-columns: 1fr 1fr; }
       .subscribe-row { grid-template-columns: 1fr auto; }
-      .ig-grid { grid-template-columns: 1fr 1fr; }
       .marquee { --mq-h: 64px; --mq-speed: 28s; }
     }
     .btn-donate svg, .brand .logo-mark { flex: none; }
@@ -932,7 +948,6 @@
       .contact-grid { grid-template-columns: .85fr 1.15fr; gap: 24px; align-items: start; }
     }
     @media (min-width: 1100px) {
-      .ig-grid { grid-template-columns: repeat(4, 1fr); }
       .footer-grid { grid-template-columns: .8fr 1.1fr .9fr 1.4fr; gap: 40px; }
     }
     @media (min-width: 1200px) {
@@ -1295,29 +1310,41 @@
               </div>
             </div>
           </div>
-
-          <!-- INSTAGRAM POSTS — photo tiles that open each post on Instagram.
+          <!-- INSTAGRAM POSTS — stop-and-go carousel; each tile opens its post on Instagram.
+               To add a post: copy one <a class="ig-tile"> block, swap the href, image, and aria-label.
                To change a post: swap the href and the image file in images/. -->
           <a class="ig-divider" href="https://www.instagram.com/solecirclefndtn/" target="_blank" rel="noopener" aria-label="The Sole Circle Foundation on Instagram (opens in new tab)">
             <span class="ig-divider-icon"><svg aria-hidden="true"><use href="#i-instagram"/></svg></span>
           </a>
-          <div class="ig-grid">
-            <a class="ig-tile" href="https://www.instagram.com/p/DTiVWJXDvvy/" target="_blank" rel="noopener" aria-label="View our MLK Natatorium post on Instagram (opens in new tab)">
-              <img src="images/mlk-natatorium.jpg" alt="Sole Circle Foundation leader with community and city leaders at an event" loading="lazy" style="object-position: 50% 50%" />
-              <svg aria-hidden="true"><use href="#i-instagram"/></svg>
-            </a>
-            <a class="ig-tile" href="https://www.instagram.com/p/Daxz-lmOpBz/" target="_blank" rel="noopener" aria-label="View our Sole Play Gaming post on Instagram (opens in new tab)">
-              <img src="images/soleplay-gaming.jpg" alt="The Sole Circle Foundation logo over pink and white flowers" loading="lazy" style="object-position: 50% 45%" />
-              <svg aria-hidden="true"><use href="#i-instagram"/></svg>
-            </a>
-            <a class="ig-tile" href="https://www.instagram.com/p/DehOBX1EUz3/" target="_blank" rel="noopener" aria-label="View our Pouring Into Parents post on Instagram (opens in new tab)">
-              <img src="images/pouring-into-parents.jpg" alt="Sole Circle Foundation team and guests on stage" loading="lazy" style="object-position: 50% 50%" />
-              <svg aria-hidden="true"><use href="#i-instagram"/></svg>
-            </a>
-            <a class="ig-tile" href="https://www.instagram.com/reel/DbGgeb6x6fl/" target="_blank" rel="noopener" aria-label="View our Black Girls Code reel on Instagram (opens in new tab)">
-              <img src="images/black-girls-code.jpg" alt="Black Girls Code students reacting with excitement during an event" loading="lazy" style="object-position: 50% 75%" />
-              <svg aria-hidden="true"><use href="#i-instagram"/></svg>
-            </a>
+          <div class="ig-carousel" data-ig-carousel aria-roledescription="carousel" aria-label="Recent Instagram posts">
+            <div class="ig-viewport">
+              <div class="ig-track">
+                <a class="ig-tile" href="https://www.instagram.com/p/DTiVWJXDvvy/" target="_blank" rel="noopener" aria-label="View our MLK Natatorium post on Instagram (opens in new tab)">
+                  <img src="images/mlk-natatorium.jpg" alt="Sole Circle Foundation leader with community and city leaders at an event" loading="lazy" style="object-position: 50% 50%" />
+                  <svg aria-hidden="true"><use href="#i-instagram"/></svg>
+                </a>
+                <a class="ig-tile" href="https://www.instagram.com/p/Daxz-lmOpBz/" target="_blank" rel="noopener" aria-label="View our Sole Play Gaming post on Instagram (opens in new tab)">
+                  <img src="images/soleplay-gaming.jpg" alt="The Sole Circle Foundation logo over pink and white flowers" loading="lazy" style="object-position: 50% 45%" />
+                  <svg aria-hidden="true"><use href="#i-instagram"/></svg>
+                </a>
+                <a class="ig-tile" href="https://www.instagram.com/p/DehOBX1EUz3/" target="_blank" rel="noopener" aria-label="View our Pouring Into Parents post on Instagram (opens in new tab)">
+                  <img src="images/pouring-into-parents.jpg" alt="Sole Circle Foundation team and guests on stage" loading="lazy" style="object-position: 50% 50%" />
+                  <svg aria-hidden="true"><use href="#i-instagram"/></svg>
+                </a>
+                <a class="ig-tile" href="https://www.instagram.com/reel/DbGgeb6x6fl/" target="_blank" rel="noopener" aria-label="View our Black Girls Code reel on Instagram (opens in new tab)">
+                  <img src="images/black-girls-code.jpg" alt="Black Girls Code students reacting with excitement during an event" loading="lazy" style="object-position: 50% 75%" />
+                  <svg aria-hidden="true"><use href="#i-instagram"/></svg>
+                </a>
+                <a class="ig-tile" href="https://www.instagram.com/p/CwYYkX9JcGH/" target="_blank" rel="noopener" aria-label="View our Day Dream custom cleats post on Instagram (opens in new tab)">
+                  <img src="images/day-dream-sneaker.jpg" alt="Hands holding a hand-painted Nike cleat with a Day Dream tag" loading="lazy" style="object-position: 50% 50%" />
+                  <svg aria-hidden="true"><use href="#i-instagram"/></svg>
+                </a>
+              </div>
+            </div>
+            <div class="ig-controls">
+              <button class="ig-arrow" type="button" data-ig-prev aria-label="Previous post"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+              <button class="ig-arrow" type="button" data-ig-next aria-label="Next post"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            </div>
           </div>
         </div>
       </section>
@@ -2371,6 +2398,48 @@
     const flyerSrc = flyerImg.src;
     document.querySelectorAll('[data-flyer-link]').forEach(a => a.href = flyerSrc);
     drive.style.setProperty('--flyer-bg', `url("${flyerSrc}")`);
+
+    // Instagram carousel: stop-and-go. Slides one post, pauses IG_PAUSE ms, repeats; loops forever.
+    // Pauses while hovered or focused. Arrows always work; no autoplay for reduced-motion users.
+    (() => {
+      const IG_PAUSE = 3000;
+      const root = document.querySelector('[data-ig-carousel]');
+      if (!root) return;
+      const track = root.querySelector('.ig-track');
+      const originals = [...track.children];
+      const count = originals.length;
+      originals.forEach(el => {          // clone the set once so the loop is seamless
+        const c = el.cloneNode(true);
+        c.setAttribute('aria-hidden', 'true');
+        c.tabIndex = -1;
+        track.appendChild(c);
+      });
+      let i = 0, timer = null;
+      const step = () => track.children[1].offsetLeft - track.children[0].offsetLeft;
+      const go = (n, animate = true) => {
+        i = n;
+        track.style.transition = animate ? '' : 'none';
+        track.style.transform = `translateX(${-i * step()}px)`;
+        if (!animate) void track.offsetWidth; // apply the jump before the next slide
+      };
+      const next = () => { if (i >= count) go(i - count, false); go(i + 1); };
+      const prev = () => { if (i <= 0) go(i + count, false); go(i - 1); };
+      track.addEventListener('transitionend', e => {
+        if (e.target === track && i >= count) go(i - count, false);
+      });
+      root.querySelector('[data-ig-next]').addEventListener('click', next);
+      root.querySelector('[data-ig-prev]').addEventListener('click', prev);
+      window.addEventListener('resize', () => go(i, false));
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const play = () => { clearInterval(timer); timer = setInterval(next, IG_PAUSE + 700); };
+      const stop = () => clearInterval(timer);
+      root.addEventListener('mouseenter', stop);
+      root.addEventListener('mouseleave', play);
+      root.addEventListener('focusin', stop);
+      root.addEventListener('focusout', e => { if (!root.contains(e.relatedTarget)) play(); });
+      play();
+    })();
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
