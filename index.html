@@ -404,6 +404,50 @@
     .drive-status { display: inline-flex; align-items: center; gap: 8px; margin: 4px 0 8px; font-weight: 800; color: var(--mint); }
     .drive-status svg { width: 18px; height: 18px; flex: none; }
 
+    /* Book a Tour — shares the sneaker drive band (see data-tour on #sneaker-drive) */
+    [data-tour="off"] .tour-panel { display: none !important; }
+    .share-grid { display: grid; gap: 56px; }
+    .tour-panel h2 { color: #fff; font-size: clamp(1.8rem, 4.5vw, 2.6rem); }
+    .tour-panel .lede { color: rgba(255,255,255,.88); }
+    .tour-info { display: grid; gap: 12px; margin: 18px 0 20px; }
+    @media (min-width: 600px) { .tour-info { grid-template-columns: 1fr 1fr; } }
+    .tour-info-item {
+      display: flex; gap: 12px; align-items: flex-start;
+      background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.2);
+      border-radius: var(--radius-sm); padding: 14px 16px;
+      color: #fff; text-decoration: none; font-size: .92rem; line-height: 1.45;
+      -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    }
+    a.tour-info-item { transition: border-color .2s, transform .2s; }
+    a.tour-info-item:hover { border-color: var(--mint); transform: translateX(3px); color: #fff; }
+    .tour-info-item svg { width: 22px; height: 22px; flex: none; margin-top: 1px; color: var(--mint); }
+    .tour-info-item strong { display: block; color: var(--mint); }
+    .tour-info-item span { color: rgba(255,255,255,.82); }
+    .tour-card {
+      background: #fff; color: var(--ink); border-radius: var(--radius);
+      padding: 24px 22px; box-shadow: 0 30px 60px -28px rgba(0,0,0,.55); margin-top: 8px;
+    }
+    .tour-note {
+      display: flex; gap: 10px; align-items: flex-start; margin: 0;
+      padding: 12px 14px; border-radius: var(--radius-sm);
+      background: var(--mint-soft); color: #12493A; font-size: .92rem; line-height: 1.45;
+    }
+    .tour-note svg { width: 20px; height: 20px; flex: none; margin-top: 1px; }
+    .slot-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+    .slot-chips .check { position: relative; padding: 9px 14px; }
+    .slot-chips .check input { position: absolute; opacity: 0; pointer-events: none; }
+    .slot-chips .check:has(input:focus-visible) { outline: 3px solid var(--blue); outline-offset: 2px; }
+    .slot-empty { color: var(--muted); font-size: .92rem; margin: 0; }
+    .tour-card .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+    .tour-cta-row { margin: -8px 0 28px; }
+    [data-tour="on"] .drive-panel .flyer-frame { max-width: 260px; }
+    /* Desktop, tour on: form left, sneaker drive stacked on the right with a smaller flyer */
+    @media (min-width: 1000px) {
+      [data-tour="on"] .share-grid { grid-template-columns: 1.15fr 1fr; align-items: start; gap: 64px; }
+      [data-tour="on"] .drive-panel { grid-template-columns: 1fr; gap: 24px; padding-top: 4px; }
+      [data-tour="on"] .drive-panel .flyer-frame { max-width: 280px; margin: 0; }
+    }
+
     /* ---- 3. Mission + founders (black) ---- */
     .band-mission { background: var(--band-mission); color: #fff; padding-top: 64px; padding-bottom: 72px; border-top: 1px solid rgba(255,255,255,.08); }
     .mission-statement { text-align: center; max-width: 720px; margin: 0 auto 40px; }
@@ -1055,6 +1099,7 @@
 
       <!-- Upcoming Events — a direct link (no dropdown) -->
       <button class="drawer-toplink" type="button" data-goto="upcoming-events">Upcoming Events <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      <button class="drawer-toplink" type="button" data-goto="home" data-section="book-tour">Book a Tour <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
 
       <!-- I Want To Help — TODO: add pages as they're written -->
       <details class="drawer-group">
@@ -1193,59 +1238,130 @@
         </div>
       </section>
 
-      <!-- 4. SNEAKER DONATION DRIVE
-      ON/OFF SWITCH: change data-drive="closed" to data-drive="open" when a new drive launches.
-      • "closed" shows everything marked drive-closed (the not-accepting message + flyer).
-      • "open"   shows everything marked drive-open (dates, drop-off spots, download button + flyer).
-      Before opening a new drive, update the drive-open dates, locations, and flyer below.
-      The blurred background and Download button use whichever flyer is showing (set in JS). -->
-      <section class="band band-flyer" id="sneaker-drive" data-drive="closed" aria-labelledby="drive-title">
-        <div class="band-inner flyer-grid">
-          <div class="flyer-frame">
-            <img class="drive-open" data-flyer src="images/Sneaker Dono.jpg" width="820" height="1027" loading="lazy"
-                 alt="Sneaker Donation Drive flyer from The Sole Circle Foundation and Sole Play with drop-off locations and dates." />
-            <img class="drive-closed" data-flyer src="images/sneaker-donation-closed.jpg" width="1028" height="1288" loading="lazy"
-                 alt="Sneaker Donation Drive flyer: We are not currently accepting donations. Stay connected for future collection dates and announcements." />
-          </div>
+      <!-- 4. BOOK A TOUR + SNEAKER DONATION DRIVE (shared band)
+      TWO ON/OFF SWITCHES on the <section> tag below:
+      • data-tour="on" / "off"      → shows or hides the Book a Tour form (left column).
+      • data-drive="open" / "closed" → which Sneaker Drive version shows (right column).
+        "closed" = not-accepting message + flyer. "open" = dates, drop-off spots, download button + flyer.
+        Before opening a new drive, update the drive-open dates, locations, and flyer below.
+      With the tour off, the Sneaker Drive goes back to its full-width layout automatically.
+      Tour dates/times + where requests go (TOUR_ENDPOINT / TOUR_FALLBACK_EMAIL) are set in the script. -->
+      <section class="band band-flyer" id="sneaker-drive" data-drive="closed" data-tour="on" aria-labelledby="drive-title">
+        <div class="band-inner share-grid">
 
-          <div class="flyer-copy">
-            <span class="eyebrow"><svg aria-hidden="true"><use href="#i-shoe"/></svg>Give back</span>
-            <h2 id="drive-title">Sneaker Donation Drive</h2>
-
-            <!-- Always shown -->
-            <p class="lede">The Sole Circle Foundation’s Sneaker Donation Drive supports opportunities to place gently used footwear back into the community.</p>
-
-            <!-- CLOSED -->
-            <div class="drive-closed">
-              <p class="drive-status"><svg aria-hidden="true"><use href="#i-cal"/></svg>We are not currently accepting donations.</p>
-              <p class="lede">Please stay connected for future collection dates and announcements.</p>
-              <div class="hero-cta">
-                <button class="btn btn-mint" type="button" data-goto="home" data-section="connect">Get updates</button>
-                <button class="btn btn-outline-light" type="button" data-goto="contact">Questions? Contact us</button>
+          <!-- BOOK A TOUR -->
+          <div class="tour-panel" id="book-tour">
+            <span class="eyebrow"><svg aria-hidden="true"><use href="#i-home"/></svg>Sole Play Gaming Lounge</span>
+            <h2 id="tour-title">Book a Tour</h2>
+            <p class="lede">See the space before you visit. Pick a day and time, and our team will reach out to confirm your tour.</p>
+            <div class="tour-info">
+              <div class="tour-info-item">
+                <svg aria-hidden="true"><use href="#i-clock"/></svg>
+                <span><strong>Lounge hours</strong>Wed–Fri 4 PM–12 AM<br />Sat 2 PM–12 AM</span>
               </div>
+              <a class="tour-info-item" target="_blank" rel="noopener"
+                 href="https://www.google.com/maps/search/?api=1&amp;query=106+E+Ponce+de+Leon+Ave%2C+Decatur%2C+GA+30030">
+                <svg aria-hidden="true"><use href="#i-pin"/></svg>
+                <span><strong>Location</strong>106 E Ponce de Leon Ave<br />Decatur, GA 30030</span>
+              </a>
             </div>
 
-            <!-- OPEN — update dates, locations, and flyer before switching on -->
-            <div class="drive-open">
-              <p class="flyer-dates"><svg aria-hidden="true"><use href="#i-cal"/></svg>[Start date] – [End date]</p>
-              <div class="dropoffs">
-                <a class="dropoff" target="_blank" rel="noopener"
-                   href="https://www.google.com/maps/search/?api=1&amp;query=106+E+Ponce+de+Leon+Ave%2C+Decatur%2C+GA+30030">
-                  <svg aria-hidden="true"><use href="#i-pin"/></svg>
-                  <span><strong>Sole Play Decatur</strong>106 E Ponce de Leon Ave, Suite B Decatur, GA 30030</span>
-                </a>
-                <a class="dropoff" target="_blank" rel="noopener"
-                   href="https://www.google.com/maps/search/?api=1&amp;query=1956+Duluth+Hwy+%23108B%2C+Lawrenceville%2C+GA">
-                  <svg aria-hidden="true"><use href="#i-pin"/></svg>
-                  <span><strong>Sole Play Lawrenceville</strong>1956 Duluth Hwy #108B, Lawrenceville, GA</span>
-                </a>
+            <form class="tour-card" id="tour-form" novalidate aria-labelledby="tour-title">
+              <p class="tour-note"><svg aria-hidden="true"><use href="#i-cal"/></svg><span>This request is for a <strong>guided tour of the gaming lounge</strong> only. It doesn’t reserve gaming time or book the venue for an event. Your tour isn’t set until we confirm it by email.</span></p>
+              <div class="form-row">
+                <div class="field">
+                  <label for="t-name">Name <span class="req">*</span></label>
+                  <input type="text" id="t-name" name="name" autocomplete="name" required />
+                </div>
+                <div class="field">
+                  <label for="t-email">Email <span class="req">*</span></label>
+                  <input type="email" id="t-email" name="email" autocomplete="email" required />
+                </div>
               </div>
-              <div class="hero-cta">
-                <a class="btn btn-mint" href="#" data-flyer-link download="sole-circle-sneaker-donation-drive.jpg"><svg aria-hidden="true"><use href="#i-download"/></svg>Download flyer</a>
-                <button class="btn btn-outline-light" type="button" data-goto="contact">Questions? Contact us</button>
+              <div class="form-row">
+                <div class="field">
+                  <label for="t-phone">Phone number</label>
+                  <input type="tel" id="t-phone" name="phone" autocomplete="tel" />
+                </div>
+                <div class="field">
+                  <label for="t-group">Group size <span class="req">*</span></label>
+                  <select id="t-group" name="groupSize" required>
+                    <option value="1">Just me</option>
+                    <option value="2">2 people</option>
+                    <option value="3–5">3–5 people</option>
+                    <option value="6–10">6–10 people</option>
+                    <option value="11+">11+ people (school or organization)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field">
+                <label for="t-date">Preferred date <span class="req">*</span></label>
+                <select id="t-date" name="date" required></select>
+              </div>
+              <fieldset>
+                <legend>Preferred time <span class="req">*</span></legend>
+                <div class="slot-chips" id="t-times"></div>
+              </fieldset>
+              <div class="field">
+                <label for="t-notes">Questions or anything we should know?</label>
+                <textarea id="t-notes" name="message" placeholder="For example: accessibility needs, the age of your group, what you’d like to see"></textarea>
+              </div>
+              <!-- spam trap: real visitors never see or fill this -->
+              <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" />
+              <button class="btn btn-blue" type="submit">Request a tour</button>
+              <p class="form-status" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+
+          <!-- SNEAKER DONATION DRIVE -->
+          <div class="drive-panel flyer-grid">
+            <div class="flyer-frame">
+              <img class="drive-open" data-flyer src="images/Sneaker Dono.jpg" width="820" height="1027" loading="lazy"
+                   alt="Sneaker Donation Drive flyer from The Sole Circle Foundation and Sole Play with drop-off locations and dates." />
+              <img class="drive-closed" data-flyer src="images/sneaker-donation-closed.jpg" width="1028" height="1288" loading="lazy"
+                   alt="Sneaker Donation Drive flyer: We are not currently accepting donations. Stay connected for future collection dates and announcements." />
+            </div>
+
+            <div class="flyer-copy">
+              <span class="eyebrow"><svg aria-hidden="true"><use href="#i-shoe"/></svg>Give back</span>
+              <h2 id="drive-title">Sneaker Donation Drive</h2>
+
+              <!-- Always shown -->
+              <p class="lede">The Sole Circle Foundation’s Sneaker Donation Drive supports opportunities to place gently used footwear back into the community.</p>
+
+              <!-- CLOSED -->
+              <div class="drive-closed">
+                <p class="drive-status"><svg aria-hidden="true"><use href="#i-cal"/></svg>We are not currently accepting donations.</p>
+                <p class="lede">Please stay connected for future collection dates and announcements.</p>
+                <div class="hero-cta">
+                  <button class="btn btn-mint" type="button" data-goto="home" data-section="connect">Get updates</button>
+                  <button class="btn btn-outline-light" type="button" data-goto="contact">Questions? Contact us</button>
+                </div>
+              </div>
+
+              <!-- OPEN — update dates, locations, and flyer before switching on -->
+              <div class="drive-open">
+                <p class="flyer-dates"><svg aria-hidden="true"><use href="#i-cal"/></svg>[Start date] – [End date]</p>
+                <div class="dropoffs">
+                  <a class="dropoff" target="_blank" rel="noopener"
+                     href="https://www.google.com/maps/search/?api=1&amp;query=106+E+Ponce+de+Leon+Ave%2C+Decatur%2C+GA+30030">
+                    <svg aria-hidden="true"><use href="#i-pin"/></svg>
+                    <span><strong>Sole Play Decatur</strong>106 E Ponce de Leon Ave, Suite B Decatur, GA 30030</span>
+                  </a>
+                  <a class="dropoff" target="_blank" rel="noopener"
+                     href="https://www.google.com/maps/search/?api=1&amp;query=1956+Duluth+Hwy+%23108B%2C+Lawrenceville%2C+GA">
+                    <svg aria-hidden="true"><use href="#i-pin"/></svg>
+                    <span><strong>Sole Play Lawrenceville</strong>1956 Duluth Hwy #108B, Lawrenceville, GA</span>
+                  </a>
+                </div>
+                <div class="hero-cta">
+                  <a class="btn btn-mint" href="#" data-flyer-link download="sole-circle-sneaker-donation-drive.jpg"><svg aria-hidden="true"><use href="#i-download"/></svg>Download flyer</a>
+                  <button class="btn btn-outline-light" type="button" data-goto="contact">Questions? Contact us</button>
+                </div>
               </div>
             </div>
           </div>
+
         </div>
       </section>
 
@@ -1434,6 +1550,7 @@
     <section class="panel" id="design" aria-labelledby="design-title" tabindex="-1">
       <div class="wrap narrow-wrap">
         <header class="page-head">
+        <p class="tour-cta-row"><button class="btn btn-blue" type="button" data-goto="home" data-section="book-tour"><svg aria-hidden="true"><use href="#i-cal"/></svg>Book a tour of the lounge</button></p>
           <h2 id="design-title">Sole Play Gaming Lounge</h2>
           <a class="social-link social-link-sm" href="https://www.instagram.com/soleplay.gaming/" target="_blank" rel="noopener" aria-label="Sole Play Gaming Lounge on Instagram (opens in new tab)"><svg aria-hidden="true"><use href="#i-instagram"/></svg></a>
         </header>
@@ -2453,6 +2570,125 @@
       root.addEventListener('focusin', stop);
       root.addEventListener('focusout', e => { if (!root.contains(e.relatedTarget)) play(); });
       play();
+    })();
+    // =========================================================
+    // BOOK A TOUR
+    // =========================================================
+    // Dates + times visitors can request. days: 0 = Sunday … 6 = Saturday; only listed days appear.
+    // Lounge hours: Wed–Fri 4 PM–12 AM, Sat 2 PM–12 AM. Tour slots sit at the start of each day.
+    // leadDays: earliest date offered (2 = no same-day or next-day). weeksAhead: how far out to offer.
+    // closedDates: holidays/closures to skip (YYYY-MM-DD).
+    const TOUR_SCHEDULE = {
+      days: {
+        3: ['4:00 PM', '5:00 PM', '6:00 PM'],   // Wednesday
+        4: ['4:00 PM', '5:00 PM', '6:00 PM'],   // Thursday
+        5: ['4:00 PM', '5:00 PM', '6:00 PM'],   // Friday
+        6: ['2:00 PM', '3:00 PM', '4:00 PM']    // Saturday
+      },
+      leadDays: 2,
+      weeksAhead: 6,
+      closedDates: ['2026-11-26', '2026-12-24', '2026-12-25', '2026-12-31', '2027-01-01']
+    };
+
+    // WHERE REQUESTS GO (backend scaffolding — nothing is wired yet)
+    // TOUR_ENDPOINT: later, a URL that accepts a JSON POST (e.g. '/api/book-tour' on Vercel,
+    //   or a Formspree URL) and emails Kalen, TJ, and April. It receives:
+    //   { name, email, phone, groupSize, date, time, message, company }
+    //   date looks like "Wed, Dec 2 (2026-12-02)", time like "4:00 PM".
+    //   company is a spam trap: if it has any value, the server should drop the request.
+    //   Respond 2xx on success; anything else shows the error message.
+    // TOUR_FALLBACK_EMAIL: used only while TOUR_ENDPOINT is blank. Opens the visitor's email app
+    //   with the request already written, addressed here. Leave both blank = preview mode
+    //   (nothing is sent; the form says so).
+    const TOUR_ENDPOINT = '';
+    const TOUR_FALLBACK_EMAIL = '';
+
+    (() => {
+      const form = document.getElementById('tour-form');
+      if (!form) return;
+      const dateSel = form.querySelector('#t-date');
+      const timesBox = form.querySelector('#t-times');
+      const status = form.querySelector('.form-status');
+      const btn = form.querySelector('[type="submit"]');
+      const pad = n => String(n).padStart(2, '0');
+      const iso = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+      const label = d => d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+
+      // Build the date list
+      const start = new Date(); start.setHours(0, 0, 0, 0); start.setDate(start.getDate() + TOUR_SCHEDULE.leadDays);
+      const opts = ['<option value="">Choose a date</option>'];
+      for (let k = 0; k < TOUR_SCHEDULE.weeksAhead * 7; k++) {
+        const d = new Date(start); d.setDate(start.getDate() + k);
+        if (TOUR_SCHEDULE.days[d.getDay()] && !TOUR_SCHEDULE.closedDates.includes(iso(d))) {
+          opts.push(`<option value="${label(d)} (${iso(d)})" data-day="${d.getDay()}">${label(d)}</option>`);
+        }
+      }
+      dateSel.innerHTML = opts.join('');
+
+      // Time chips for the chosen date
+      const renderTimes = () => {
+        const opt = dateSel.selectedOptions[0];
+        const times = opt && opt.dataset.day ? TOUR_SCHEDULE.days[opt.dataset.day] : null;
+        timesBox.innerHTML = times
+          ? times.map(t => `<label class="check"><input type="radio" name="time" value="${t}" required />${t}</label>`).join('')
+          : '<p class="slot-empty">Choose a date to see available times.</p>';
+      };
+      dateSel.addEventListener('change', renderTimes);
+      renderTimes();
+
+      const say = (msg, cls) => { status.textContent = msg; status.className = 'form-status' + (cls ? ' ' + cls : ''); };
+      const done = () => { form.reset(); renderTimes(); };
+
+      form.addEventListener('submit', async e => {
+        e.preventDefault();
+        if (!form.checkValidity()) {
+          say('Please fill in the highlighted required fields.', 'err');
+          const firstBad = form.querySelector(':invalid'); firstBad && firstBad.focus();
+          form.reportValidity();
+          return;
+        }
+        const data = Object.fromEntries(new FormData(form));
+        if (data.company) { done(); return; } // spam trap
+
+        // 1) Real endpoint (later)
+        if (TOUR_ENDPOINT) {
+          btn.disabled = true;
+          try {
+            const res = await fetch(TOUR_ENDPOINT, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+              body: JSON.stringify(data)
+            });
+            if (!res.ok) throw new Error('Request failed');
+            done();
+            say('Thanks! Your tour request is in. We’ll email you to confirm your time.', 'ok');
+          } catch (err) {
+            say('Something went wrong sending your request. Please try again or contact us.', 'err');
+          } finally {
+            btn.disabled = false;
+          }
+          return;
+        }
+
+        // 2) Email fallback (no backend yet)
+        if (TOUR_FALLBACK_EMAIL) {
+          const body = [
+            'Gaming lounge TOUR request (tour of the space only)', '',
+            `Name: ${data.name}`, `Email: ${data.email}`, `Phone: ${data.phone || '—'}`,
+            `Group size: ${data.groupSize}`, `Preferred date: ${data.date}`, `Preferred time: ${data.time}`, '',
+            `Questions / notes: ${data.message || '—'}`
+          ].join('\n');
+          const subject = `Tour request: ${data.date} at ${data.time} — ${data.name}`;
+          window.location.href = `mailto:${TOUR_FALLBACK_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+          say('Your email app should open with your request filled in. Press send to finish.', 'ok');
+          return;
+        }
+
+        // 3) Preview mode (nothing connected yet): looks and behaves like a real submission
+        console.info('[tour preview] would send:', data);
+        done();
+        say('Thanks! Your tour request is in. We’ll email you to confirm your time.', 'ok');
+      });
     })();
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
