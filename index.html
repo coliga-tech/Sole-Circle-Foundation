@@ -444,8 +444,10 @@
     /* Desktop, tour on: form left, sneaker drive stacked on the right with a smaller flyer */
     @media (min-width: 1000px) {
       [data-tour="on"] .share-grid { grid-template-columns: 1.15fr 1fr; align-items: start; gap: 64px; }
-      [data-tour="on"] .drive-panel { grid-template-columns: 1fr; gap: 24px; padding-top: 4px; }
-      [data-tour="on"] .drive-panel .flyer-frame { max-width: 280px; margin: 0; }
+      [data-tour="on"] .share-grid { align-items: stretch; }
+      [data-tour="on"] .drive-panel { grid-template-columns: 1fr; align-content: center; justify-items: center; gap: 32px; text-align: center; }
+      [data-tour="on"] .drive-panel .flyer-frame { max-width: 400px; margin: 0 auto; }
+      [data-tour="on"] .drive-panel .hero-cta { justify-content: center; }
     }
 
     /* ---- 3. Mission + founders (black) ---- */
